@@ -1,8 +1,18 @@
 <!DOCTYPE html>
+<html>
 <meta charset="utf-8">
 <style>
+table{
+      margin: 10px auto;
+}
+
+table, tr {
+    width:200px;
+    border: 2px solid black;
+    text-align: center;
+}
 svg {
-  font: 10px sans-serif;
+  font: 12px consolas;
 }
 .line {
   fill: none;
@@ -16,15 +26,16 @@ svg {
   shape-rendering: crispEdges;
 }
 </style>
-<body>
+<body >
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.7/socket.io.min.js"></script>
+
 <script>
     var BOTTOM_DATA=-512;
     var TOP_DATA=512;
-    var n = 500,    
+    var n = 400,    
     data = d3.range(n);
-var margin = {top: 20, right: 20, bottom: 20, left: 40},
+var margin = {top: 20, right: 20, bottom: 20, left: 50},
     width = 1366 - margin.left - margin.right,
     height = 768 - margin.top - margin.bottom;
 var x = d3.scale.linear()
@@ -69,12 +80,32 @@ function inRange(data){
     return data>BOTTOM_DATA&&data<TOP_DATA;
 }
 
+var lastData=0;
+var index=0;
 
+function insertInTable(key, value){
+    var table =document.getElementById('tabla');
+    var tr = document.createElement('tr');   
+
+    var td1 = document.createElement('td');
+    var td2 = document.createElement('td');
+   
+    var text1 = document.createTextNode(key);
+    var text2 = document.createTextNode(value);
+
+    td1.appendChild(text1);
+    td2.appendChild(text2);
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+
+    table.appendChild(tr);
+}
 
 function tick(datain) {
   // push a new data point onto the back
   
   if(isNumeric(datain) && inRange(datain)){
+    insertInTable(index++,lastData);
     data.push(datain);    
      path
     .attr("d", line)
@@ -93,16 +124,27 @@ function tick(datain) {
  
 }
 
-var lastData=0;
 //SOCKET IO
   var socket = io.connect('http://localhost'); //io declarada en socketio.js
   socket.on('newServerData', function (data) {
     console.log("rx:"+data);
 	lastData=data;
-        tick(lastData);
+        tick(lastData);        
     //socket.emit('event', dat);
   });
 
-setInterval(function(){ tick(lastData);}, 10);
+//setInterval(function(){ tick(lastData);}, 10);
 
 </script>
+
+<div style='overflow:hidden;'>
+    <table id="tabla" border="1">
+      <tr>
+      <th>indice</th>
+      <th>valor</th>
+      </tr>
+    </table>
+</div>
+
+</body>
+</html>
