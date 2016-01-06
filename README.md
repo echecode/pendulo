@@ -5,17 +5,12 @@ Graph data from serial port
 
 ###Dependencies
 
-1-git 
+* git https://git-scm.com/downloads
 
-https://git-scm.com/downloads
+* nodejs https://nodejs.org/en/download/releases/
 
-2-nodejs
-
-https://nodejs.org/en/download/releases/
-
-3-Serial port library 
-
-npm install -g serialport
+* Serial port library 
+  npm install -g serialport
 
 ###Graphserial
 
