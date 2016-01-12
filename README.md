@@ -1,7 +1,7 @@
-# graphserial
+# Graphserial
 Graph data from serial port
 
-##install
+##Install
 
 ###Dependencies
 
@@ -10,12 +10,14 @@ Graph data from serial port
 * nodejs https://nodejs.org/en/download/releases/
 
 * Serial port library 
-  npm install -g serialport
+  ´´´npm install -g serialport´´´
 
 ###Graphserial
 
 git clone https://github.com/hernaneche/graphserial.git
 
-node serial.js
+####run
+
+´´´node serial.js´´´
 
 To change serial port number, edit index.html, change COM77 for whatever, and reload page
