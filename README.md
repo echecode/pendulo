@@ -14,7 +14,7 @@ Graph data from serial port
 
 ###Graphserial
 
-git clone https://github.com/hernaneche/graphserial.git
+```git clone https://github.com/hernaneche/graphserial.git```
 
 ####run
 
