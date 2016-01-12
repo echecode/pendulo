@@ -9,7 +9,7 @@ Graph data from serial port
 
 * nodejs https://nodejs.org/en/download/releases/
 
-* Serial port library 
+* Serial port library  
 ```npm install -g serialport```
 
 ###Graphserial
