@@ -12,6 +12,13 @@ var http = require('http');
 var server = http.createServer(appExpress);
 var io = require('socket.io').listen(server);
 server.listen(80);
+/*
+var app    = require('express')();
+var server = require('http').Server(app);
+var io     = require('socket.io')(server);
+
+server.listen(80);
+*/
 //FIN DE FORMA INCOMPRENSIBLE
 
 //ATIENDE METODO GET
