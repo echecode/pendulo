@@ -2,12 +2,13 @@
 Graph data from serial port
 
 ##Install
-
-###Dependencies
+###Pre
 
 * git https://git-scm.com/downloads
 
 * nodejs https://nodejs.org/en/download/releases/
+
+###Dependencies
 
 * Serial port library  
 ```npm install -g serialport```
