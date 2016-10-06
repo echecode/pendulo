@@ -17,8 +17,12 @@ Graph data from serial port
 
 ```git clone https://github.com/hernaneche/graphserial.git```
 
+To change serial port number, edit index.html, change COM77 for whatever, and reload page
+
 ####run
 
 ```node serial.js```
 
-To change serial port number, edit index.html, change COM77 for whatever, and reload page
+http://localhost/
+
+
