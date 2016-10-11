@@ -25,6 +25,6 @@ To change serial port number, edit index.html, change COM77 for whatever, and re
 
 ###Browse
 
-```https://localhost/```
+```http://localhost/```
 
 
