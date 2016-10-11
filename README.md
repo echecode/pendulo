@@ -19,10 +19,12 @@ Graph data from serial port
 
 To change serial port number, edit index.html, change COM77 for whatever, and reload page
 
-####run
+###run
 
-```node serial.js```
+```node gserial.js```
 
-http://localhost/
+###Browse
+
+```https://localhost/```
 
 
