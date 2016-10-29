@@ -1,8 +1,7 @@
 'use strict';
 
-var serialport = require("serialport");         //load serial port library object
-var readline = serialport.parsers.readline;     //parser-separator for data input
-var SerialPort = serialport.SerialPort;         //localize object constructor
+var serialPort = require("serialport");         //load serial port library object
+var readline = serialPort.parsers.readline;     //parser-separator for data input
 
 
 //FORMA INCOMPRENSIBLE DE CREAR UN SERVER USANDO CANTIDAD MAXIMA DE LIBRERIAS
@@ -33,7 +32,7 @@ if (io) {   //server created
     io.sockets.on('connection', function (socket) {
 
         if (sp === null) {
-            sp = new SerialPort("COM77", {
+            sp = new serialPort("COM77", {
                 baud: 57600,
                 parser: readline('\r')
             });
