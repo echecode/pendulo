@@ -1,6 +1,8 @@
 <html>
     <head>  
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/smoothie/1.27.0/smoothie.min.js"></script>
+        <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+        <script src="escaladoSensores.js"></script>
         <!--<script type="text/javascript" src="smoothie.js"></script>-->
     </head>
     <table>  
@@ -75,9 +77,6 @@
         }
 
 
-
-
-
         for (var key in options) {
             // skip loop if the property is from prototype
             if (!options.hasOwnProperty(key))
@@ -101,6 +100,23 @@
             }, 1000);
 
         }
+
+        //SOCKET IO
+        var socket = io.connect('http://localhost'); //io declarada en socketio.js
+        
+        socket.on('newServerData', function (data) {
+            console.log("rx:"+data);                        
+
+            var keys= ['temp1', 'temp2', 'humA', 'humS', 'lluvia', 'anem', 'veleta'];
+            
+            var keysToGraph=['humA', 'humS', 'lluvia', 'anem', 'veleta'];
+            
+            for(key in keysToGraph){                
+                series[key].append(new Date().getTime(), escalado(key, data[key]));
+            }
+
+            //socket.emit('event', dat);
+        });
 
     </script>
 </html>

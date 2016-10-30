@@ -32,8 +32,8 @@ if (io) {   //server created
     io.sockets.on('connection', function (socket) {
 
         if (sp === null) {
-            sp = new serialPort("COM77", {
-                baud: 57600,
+            sp = new serialPort("COM1", {
+                baud: 9600,
                 parser: readline('\r')
             });
 
