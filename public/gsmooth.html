@@ -14,6 +14,11 @@
                 <canvas id="chrt2"></canvas>
             </td>
         </tr>        
+        <tr>
+            <td>
+                <canvas id="chrt3"></canvas>
+            </td>
+        </tr>        
     </table>
     <style>
         div{
@@ -31,8 +36,9 @@
         var chart = new Object;
         var canvas = new Object;
 
-        options['chrt1'] = {lineWidth: 0.5, strokeStyle: '#ff0000', fillStyle: 'rgba(255,128,128,0.30)'};
-        options['chrt2'] = {lineWidth: 0.5, strokeStyle: '#00ff00', fillStyle: 'rgba(025,155,028,0.10)'};
+        options['chrt1'] = {lineWidth: 0.5, strokeStyle: '#ff0000', fillStyle: 'rgba(255,25,25,0.20)'};
+        options['chrt2'] = {lineWidth: 0.5, strokeStyle: '#00ff00', fillStyle: 'rgba(25,155,25,0.20)'};
+        options['chrt3'] = {lineWidth: 0.5, strokeStyle: '#0000ff', fillStyle: 'rgba(25,25,155,0.20)'};
 
         function init(destId) {
             cant = Object.keys(options).length;
@@ -55,8 +61,8 @@
             window.addEventListener('resize', resizeCanvas, false);
 
             function resizeCanvas() {                
-                canvas[destId].width = window.innerWidth * .9;
-                canvas[destId].height = window.innerHeight*.9/cant;
+                canvas[destId].width = window.innerWidth * .8;
+                canvas[destId].height = window.innerHeight*.8/cant;
 
                 /**
                  * Your drawings need to be inside this function otherwise they will be reset when 
