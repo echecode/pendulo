@@ -1,0 +1,122 @@
+<html>
+    <head>  
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/smoothie/1.27.0/smoothie.min.js"></script>
+        <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+        <script src="escaladoSensores.js"></script>
+        <!--<script type="text/javascript" src="smoothie.js"></script>-->
+    </head>
+    <table>  
+        <tr>
+            <td>
+                <canvas id="chrt1" ></canvas>
+            <td>
+        </tr>
+        <tr>
+            <td>
+                <canvas id="chrt2"></canvas>
+            </td>
+        </tr>        
+        <tr>
+            <td>
+                <canvas id="chrt3"></canvas>
+            </td>
+        </tr>        
+    </table>
+    <style>
+        div{
+            padding: 0;
+            margin: auto;
+            display: block;         
+            position: absolute;            
+            left: 0;
+            right: 0;
+        }
+    </style>
+    <script>
+        var series = new Object;
+        var options = new Object;
+        var chart = new Object;
+        var canvas = new Object;
+
+        options['chrt1'] = {lineWidth: 0.5, strokeStyle: '#ff0000', fillStyle: 'rgba(255,25,25,0.20)'};
+        options['chrt2'] = {lineWidth: 0.5, strokeStyle: '#00ff00', fillStyle: 'rgba(25,155,25,0.20)'};
+        options['chrt3'] = {lineWidth: 0.5, strokeStyle: '#0000ff', fillStyle: 'rgba(25,25,155,0.20)'};
+
+        function init(destId) {
+            cant = Object.keys(options).length;
+
+            chart[destId] = new SmoothieChart({millisPerPixel: 32,
+                grid: {fillStyle: '#ffffff', strokeStyle: '#c0c0c0', sharpLines: true, millisPerLine: 2000, verticalSections: 8, borderVisible: false},
+                labels: {precision: 1}, timestampFormatter: SmoothieChart.timeFormatter});
+
+            series[destId] = new TimeSeries();
+
+
+            chart[destId].addTimeSeries(series[destId], options[destId]);
+            canvas[destId] = document.getElementById(destId);
+            chart[destId].streamTo(canvas[destId], 500);
+
+
+            context = canvas[destId].getContext('2d');
+
+            // resize the canvas to fill browser window dynamically
+            window.addEventListener('resize', resizeCanvas, false);
+
+            function resizeCanvas() {                
+                canvas[destId].width = window.innerWidth * .8;
+                canvas[destId].height = window.innerHeight*.8/cant;
+
+                /**
+                 * Your drawings need to be inside this function otherwise they will be reset when 
+                 * you resize the browser window and the canvas goes will be cleared.
+                 */
+                //drawStuff(); 
+            }
+            resizeCanvas();
+
+        }
+
+
+        for (var key in options) {
+            // skip loop if the property is from prototype
+            if (!options.hasOwnProperty(key))
+                continue;
+            init(key);
+
+            var now = new Date().getTime();
+            for (var t = now - 1000 * 50; t <= now; t += 1000) {
+                series[key].append(t, series[key]);
+            }
+
+            autoInsertFor(key);
+
+        }
+
+        function autoInsertFor(key) {
+            setInterval(function () {
+                var val = Math.random();
+                //console.log('key:'+key+" val:"+val)
+                series[key].append(new Date().getTime(), val);
+            }, 1000);
+
+        }
+
+        //SOCKET IO
+        var socket = io.connect('http://localhost'); //io declarada en socketio.js
+        
+        socket.on('newServerData', function (data) {
+            console.log("rx:"+data);                        
+
+            var keys= ['temp1', 'temp2', 'humA', 'humS', 'lluvia', 'anem', 'veleta'];
+            
+            var keysToGraph=['humA', 'humS', 'lluvia', 'anem', 'veleta'];
+            
+            for(key in keysToGraph){                
+                series[key].append(new Date().getTime(), escalado(key, data[key]));
+            }
+
+            //socket.emit('event', dat);
+        });
+
+    </script>
+</html>

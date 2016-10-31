@@ -1,8 +1,7 @@
 'use strict';
 
-var serialport = require("serialport");         //load serial port library object
-var readline = serialport.parsers.readline;     //parser-separator for data input
-var SerialPort = serialport.SerialPort;         //localize object constructor
+var serialPort = require("serialport");         //load serial port library object
+var readline = serialPort.parsers.readline;     //parser-separator for data input
 
 
 //FORMA INCOMPRENSIBLE DE CREAR UN SERVER USANDO CANTIDAD MAXIMA DE LIBRERIAS
@@ -12,6 +11,13 @@ var http = require('http');
 var server = http.createServer(appExpress);
 var io = require('socket.io').listen(server);
 server.listen(80);
+/*
+var app    = require('express')();
+var server = require('http').Server(app);
+var io     = require('socket.io')(server);
+
+server.listen(80);
+*/
 //FIN DE FORMA INCOMPRENSIBLE
 
 //ATIENDE METODO GET
@@ -26,8 +32,8 @@ if (io) {   //server created
     io.sockets.on('connection', function (socket) {
 
         if (sp === null) {
-            sp = new SerialPort("COM77", {
-                baud: 57600,
+            sp = new serialPort("COM1", {
+                baud: 9600,
                 parser: readline('\r')
             });
 
