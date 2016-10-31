@@ -20,9 +20,12 @@ server.listen(80);
 */
 //FIN DE FORMA INCOMPRENSIBLE
 
+appExpress.use(express.static('public'));
+
+
 //ATIENDE METODO GET
 appExpress.get('/', function (req, res) {
-    res.sendFile(__dirname + '/public/' + 'graph.html');
+    res.sendFile(__dirname + '/public/' + 'gsmooth.html');
 });
 
 if (io) {   //server created 
@@ -32,16 +35,16 @@ if (io) {   //server created
     io.sockets.on('connection', function (socket) {
 
         if (sp === null) {
-            sp = new serialPort("COM1", {
+            sp = new serialPort("COM88", {
                 baud: 9600,
                 parser: readline('\r')
             });
 
             sp.on("open", function () {
                 console.log('open serial port');
-                sp.on('data', function (data) {
-                    console.log('data received: ' + data.toString('hex'));
+                sp.on('data', function (data) {                    
                     socket.emit('newServerData', data);
+                    console.log('rx: ' + data.toString('hex'));
                 });
 
                 sp.on('error', function (data) {

@@ -1,27 +1,39 @@
 <html>
     <head>  
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/smoothie/1.27.0/smoothie.min.js"></script>
-        <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-        <script src="escaladoSensores.js"></script>
+        <script src="/js/smoothie.min.js"></script>
+        <script src="/js/socket.io-1.4.5.js"></script>
+        <script src="/js/escaladoSensores.js"></script>
         <!--<script type="text/javascript" src="smoothie.js"></script>-->
     </head>
-    <table>  
+    <body>
+    <!--table>  
         <tr>
             <td>
-                <canvas id="chrt1" ></canvas>
+                <canvas id="humA" ></canvas>
             <td>
         </tr>
         <tr>
             <td>
-                <canvas id="chrt2"></canvas>
+                <canvas id="humS"></canvas>
             </td>
         </tr>        
         <tr>
             <td>
-                <canvas id="chrt3"></canvas>
+                <canvas id="lluvia"></canvas>
             </td>
         </tr>        
-    </table>
+        <tr>
+            <td>
+                <canvas id="anem"></canvas>
+            </td>
+        </tr>        
+        <tr>
+            <td>
+                <canvas id="veleta"></canvas>
+            </td>
+        </tr>    
+    </table-->
+    </body>
     <style>
         div{
             padding: 0;
@@ -38,11 +50,34 @@
         var chart = new Object;
         var canvas = new Object;
 
-        options['chrt1'] = {lineWidth: 0.5, strokeStyle: '#ff0000', fillStyle: 'rgba(255,25,25,0.20)'};
-        options['chrt2'] = {lineWidth: 0.5, strokeStyle: '#00ff00', fillStyle: 'rgba(25,155,25,0.20)'};
-        options['chrt3'] = {lineWidth: 0.5, strokeStyle: '#0000ff', fillStyle: 'rgba(25,25,155,0.20)'};
+        options['humA'] = {lineWidth: 0.5, strokeStyle: '#ff0000', fillStyle: 'rgba(255,25,25,0.20)'};
+        options['humS'] = {lineWidth: 0.5, strokeStyle: '#00ff00', fillStyle: 'rgba(25,155,25,0.20)'};
+        options['lluvia'] = {lineWidth: 0.5, strokeStyle: '#0000ff', fillStyle: 'rgba(25,25,155,0.20)'};
+        options['anem'] = {lineWidth: 0.5, strokeStyle: '#444444', fillStyle: 'rgba(100,100,100,0.20)'};
+        options['veleta'] = {lineWidth: 0.5, strokeStyle: '#ffffff', fillStyle: 'rgba(255,255,255,0.20)'};
+
+		function tableCreate(){
+		    var body = document.body,
+		        tbl  = document.createElement('table');
+		    
+		    names=Object.getOwnPropertyNames(options);
+
+			for (var i = 0; i < names.length; i++) {
+				var key=names[i];
+		    	console.log	("k:"+key);
+		        var tr = tbl.insertRow();		       
+		        var td = tr.insertCell();
+		        var canv = document.createElement('canvas');
+				canv.id = key;
+		        td.appendChild(canv);
+		    }
+		    body.appendChild(tbl);
+		}
+		tableCreate();
+
 
         function init(destId) {
+        	console.log('initialize:'+destId);
             cant = Object.keys(options).length;
 
             chart[destId] = new SmoothieChart({millisPerPixel: 32,
@@ -88,10 +123,10 @@
                 series[key].append(t, series[key]);
             }
 
-            autoInsertFor(key);
+            //autoInsertFor(key);
 
         }
-
+/*
         function autoInsertFor(key) {
             setInterval(function () {
                 var val = Math.random();
@@ -100,18 +135,23 @@
             }, 1000);
 
         }
-
+*/
         //SOCKET IO
         var socket = io.connect('http://localhost'); //io declarada en socketio.js
-        
-        socket.on('newServerData', function (data) {
-            console.log("rx:"+data);                        
+         console.log("config socket:"+socket);                        
+        socket.on('newServerData', function (dataStr) {
+            console.log("rx:"+dataStr);
+            var data=JSON.parse(dataStr);
 
             var keys= ['temp1', 'temp2', 'humA', 'humS', 'lluvia', 'anem', 'veleta'];
             
+            //test = { "humA":"29", "humS":"29", "lluvia":"129", "anem":"20","veleta":"33" }
             var keysToGraph=['humA', 'humS', 'lluvia', 'anem', 'veleta'];
             
-            for(key in keysToGraph){                
+ 			
+			for (var i = 0; i < keysToGraph.length; i++) {                    
+				var key=keysToGraph[i];
+                console.log("key:"+key+ " dat:"+ data[key]);
                 series[key].append(new Date().getTime(), escalado(key, data[key]));
             }
 
