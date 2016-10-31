@@ -133,16 +133,20 @@ function tick(datain) {
     //socket.emit('event', dat);
   });
 
-//setInterval(function(){ tick(lastData);}, 10);
+setInterval(function(){ tick(lastData);}, 10);
 
 </script>
 
 <div style='overflow:hidden;'>
     <table id="tabla" border="1">
       <tr>
+	  <thead>
       <th>indice</th>
       <th>valor</th>
+	  </thead>
       </tr>
+	  <tbody>
+	  </tbody>
     </table>
 </div>
 
