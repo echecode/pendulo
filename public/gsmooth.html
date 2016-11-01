@@ -1,7 +1,7 @@
 <html>
     <head>  
         <script src="/js/smoothie.min.js"></script>
-        <script src="/js/socket.io-1.4.5.js"></script>
+        <script src="/js/socket.io.js"></script>
         <script src="/js/escaladoSensores.js"></script>
         <!--<script type="text/javascript" src="smoothie.js"></script>-->
     </head>
@@ -54,7 +54,7 @@
         options['humS'] = {lineWidth: 0.5, strokeStyle: '#00ff00', fillStyle: 'rgba(25,155,25,0.20)'};
         options['lluvia'] = {lineWidth: 0.5, strokeStyle: '#0000ff', fillStyle: 'rgba(25,25,155,0.20)'};
         options['anem'] = {lineWidth: 0.5, strokeStyle: '#444444', fillStyle: 'rgba(100,100,100,0.20)'};
-        options['veleta'] = {lineWidth: 0.5, strokeStyle: '#ffffff', fillStyle: 'rgba(255,255,255,0.20)'};
+        options['veleta'] = {lineWidth: 0.5, strokeStyle: '#ffffff', fillStyle: 'rgba(155,155,55,0.30)'};
 
 		function tableCreate(){
 		    var body = document.body,
@@ -69,20 +69,36 @@
 		        var td = tr.insertCell();
 		        var canv = document.createElement('canvas');
 				canv.id = key;
-		        td.appendChild(canv);
+		        
+		        var context = canv.getContext('2d');
+
+		        var cx = canv.width / 2;
+				var text=key;
+				canvas.font="bold 20px sans-serif";
+				canvas.textAlign = 'center';
+			    context.fillText(text,cx,35)
+
+			    td.appendChild(canv);
 		    }
 		    body.appendChild(tbl);
 		}
 		tableCreate();
-
+		/*
+        function myYRangeFunction(range) {
+          // TODO implement calculation using range.min and range.max          
+          return {min: 0, max: 255};
+        }*/
 
         function init(destId) {
         	console.log('initialize:'+destId);
-            cant = Object.keys(options).length;
+            cant = Object.keys(options).length;					
 
-            chart[destId] = new SmoothieChart({millisPerPixel: 32,
+            chart[destId] = new SmoothieChart(
+                {millisPerPixel: 32,
+                 minValue:0,maxValue:255,   
                 grid: {fillStyle: '#ffffff', strokeStyle: '#c0c0c0', sharpLines: true, millisPerLine: 2000, verticalSections: 8, borderVisible: false},
-                labels: {precision: 1}, timestampFormatter: SmoothieChart.timeFormatter});
+                labels: {precision: 1}, timestampFormatter: SmoothieChart.timeFormatter}
+                );
 
             series[destId] = new TimeSeries();
 
@@ -137,7 +153,13 @@
         }
 */
         //SOCKET IO
-        var socket = io.connect('http://localhost'); //io declarada en socketio.js
+        var socket = io.connect('http://localhost', 
+				{'connect_timeout':1000,
+                'reconnection': true,
+                'reconnectionDelay': 1000,
+                'reconnectionDelayMax': 3000,
+                'reconnectionAttempts': 10,
+                'forceNew': true}); //io declarada en socketio.js
          console.log("config socket:"+socket);                        
         socket.on('newServerData', function (dataStr) {
             console.log("rx:"+dataStr);
@@ -145,7 +167,8 @@
 
             var keys= ['temp1', 'temp2', 'humA', 'humS', 'lluvia', 'anem', 'veleta'];
             
-            //test = { "humA":"29", "humS":"29", "lluvia":"129", "anem":"20","veleta":"33" }
+            //test data
+            // {"humA":"29", "humS":"29", "lluvia":"129", "anem":"20","veleta":"33" }
             var keysToGraph=['humA', 'humS', 'lluvia', 'anem', 'veleta'];
             
  			
