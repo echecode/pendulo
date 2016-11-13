@@ -1,0 +1,27 @@
+
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.grid{
+    width: 33%;
+    height: 45%;
+    float: left;
+    border: 1px dotted #444;
+    text-align: center;
+    position:relative;
+}
+.gridText{
+	font: bold 1.5em sans-serif;
+    width:100%;
+    height:auto;
+    position:absolute;
+    top:1em;
+}
+
+canvas{
+	display: block;
+    margin: 0 auto;   	   
+}
