@@ -6,9 +6,10 @@
 
         <link rel="stylesheet" type="text/css" href="css/gserial.css"/>
         <!--<script type="text/javascript" src="smoothie.js"></script>-->
-        <!--meta name="viewport" content="width=device-width, user-scalable=no" />>
+        <!--meta name="viewport" content="width=device-width, user-scalable=no" />-->
     </head>
     <body>
+
     <!--table>  
         <tr>
             <td>
@@ -60,36 +61,8 @@
         options['veleta'] = {lineWidth: 0.8, strokeStyle: '#ffffff', fillStyle: 'rgba(155,155,55,0.30)'};
         options['temp'] =   {lineWidth: 0.8, strokeStyle: '#ffffff', fillStyle: 'rgba(155,155,55,0.30)'};
         options['veleta'] = {lineWidth: 0.8, strokeStyle: '#ffffff', fillStyle: 'rgba(155,155,55,0.30)'};
-        /*
-		function tableCreate(){
-		    var body = document.body,
-		        tbl  = document.createElement('table');
-		    
-		    var names=Object.getOwnPropertyNames(options);
+    
 
-			for (var i = 0; i < names.length; i++) {
-				var key=names[i];
-		    	console.log	("k:"+key);
-		        var tr = tbl.insertRow();		       
-		        var td = tr.insertCell();
-		        var canv = document.createElement('canvas');
-				canv.id = key;
-		        
-		        var context = canv.getContext('2d');
-
-		        var cx = canv.width / 2;
-				var text=key;
-				canvas.font="bold 20px sans-serif";
-				canvas.textAlign = 'center';
-			    context.fillText(text,cx,35)
-
-			    td.appendChild(canv);
-		    }
-		    body.appendChild(tbl);
-		}
-
-        tableCreate();
-        */
         function createGrid(){
             var body = document.body;            
             
@@ -98,30 +71,34 @@
             for (var i = 0; i < names.length; i++) {
                 var key=names[i];                
                 console.log ("k:"+key);
-                var innerDiv=document.createElement('div');
+                var gridDiv=document.createElement('div');
                 var canv = document.createElement('canvas');
                 canv.id = key;
                 
-                innerDiv.className+=" grid";
+                gridDiv.className+=" grid";
 
-                /*
-                var context = canv.getContext('2d');
-                var cx = canv.width / 2;
-                var text=key;
-                canv.font="bold 20px sans-serif";
-                canv.textAlign = 'center';
-                context.fillText(text,cx,35)
-                */
+                gridDiv.setAttribute("id", key+'Div');
+
+                gridDiv.onclick=function(){
+                                            if(this.className.indexOf('Full')!=-1){ 
+                                                this.className='grid';
+                                            } else {
+                                                this.className='gridFull';
+                                            }; 
+                                            resizeCanvas(this.id.split('Div')[0]);
+                                        };
+
+               
                 var divText=document.createElement('div');
-
+                
                 divText.setAttribute("id", key+'Text');
                 divText.className+=" gridText";
                 divText.innerHTML = textByKey[key];
                 
-                innerDiv.appendChild(divText)
-                innerDiv.appendChild(canv)
+                gridDiv.appendChild(divText)
+                gridDiv.appendChild(canv)
 
-                body.appendChild(innerDiv);
+                body.appendChild(gridDiv);
             }
             
         }
@@ -134,6 +111,19 @@
           // TODO implement calculation using range.min and range.max          
           return {min: 0, max: 255};
         }*/
+
+            function resizeCanvas(destId) {                
+                //canvas[destId].width = window.innerWidth * .8;
+                //canvas[destId].height = window.innerHeight*.8/cant;
+
+                canvas[destId].style.width='95%';
+                canvas[destId].style.height='95%';
+                canvas[destId].width  = canvas[destId].offsetWidth;
+                canvas[destId].height = canvas[destId].offsetHeight;
+
+                //drawStuff(); 
+            }
+
 
         function init(destId) {
         	console.log('initialize:'+destId);
@@ -157,21 +147,10 @@
             context = canvas[destId].getContext('2d');
 
             // resize the canvas to fill browser window dynamically
-            window.addEventListener('resize', resizeCanvas, false);
+            window.addEventListener('resize', resizeCanvas(destId), false);
 
             
-            function resizeCanvas() {                
-                //canvas[destId].width = window.innerWidth * .8;
-                //canvas[destId].height = window.innerHeight*.8/cant;
-
-                canvas[destId].style.width='90%';
-                canvas[destId].style.height='90%';
-                canvas[destId].width  = canvas[destId].offsetWidth;
-                canvas[destId].height = canvas[destId].offsetHeight;
-
-                //drawStuff(); 
-            }
-            resizeCanvas();
+            resizeCanvas(destId);
             
         }
 
