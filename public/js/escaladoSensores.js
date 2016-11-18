@@ -30,36 +30,38 @@ return res;
 
 function tablaVeleta(anVeleta){
 
-	if(anVeleta>4.1){
-		return "Este";
+	
+
+	if(anVeleta>195){
+		return "Oeste";
 	}
 	
-	if(anVeleta>2.5 && anVeleta<=4.1){
-		return "Sur-Este";
+	if(anVeleta>128 && anVeleta<=195){
+		return "Nor-Oeste";
 	}
 	
-	if(anVeleta>1.47 && anVeleta<=2.5){
-		return "Sur";
-	}
-	
-	if(anVeleta>0.77 && anVeleta<=1.47){
-		return "Nor-Este";
-	}
-	
-	if(anVeleta>0.4 && anVeleta<=0.77){
-		return "Sur-Oeste";
-	}
-	
-	if(anVeleta>0.2 && anVeleta<=0.4){
+	if(anVeleta>75 && anVeleta<=128){
 		return "Norte";
 	}
 	
-	if(anVeleta>0.1 && anVeleta<=0.2){
-		return "Nor-Oeste";
+	if(anVeleta>39 && anVeleta<=75){
+		return "Sur-Oeste";
+	}
+	
+	if(anVeleta>21 && anVeleta<=39){
+		return "Nor-Este";
+	}
+	
+	if(anVeleta>10 && anVeleta<=21){
+		return "Sur";
 	}
 
-	if(anVeleta>0 && anVeleta<=0.1){
-		return "Oeste";
+	if(anVeleta>5 && anVeleta<=10){
+		return "Sur-Este";
+	}
+
+	if(anVeleta>=0 && anVeleta<=5){
+		return "Este";
 	}
 }
 
@@ -68,23 +70,24 @@ function tablaVeleta(anVeleta){
 
 function tablaLluvia(anLluvia){
 
-	if(anLluvia>0 && anLluvia<=1.5){
+	
+	if(anLluvia>=0 && anLluvia<=76.5){
 		return "Lluvia intensa";
 	}
 	
-	if(anLluvia>1.5 && anLluvia<=2){
+	if(anLluvia>76.5 && anLluvia<=102){
 		return "Lluvia liviana";
 	}
 	
-	if(anLluvia>2 && anLluvia<=3){
+	if(anLluvia>102 && anLluvia<=155){
 		return "Alta probabilidad de lluvia";
 	}
 	
-	if(anLluvia>3 && anLluvia<=3.5){
+	if(anLluvia>155 && anLluvia<=178.5){
 		return "Baja probabilidad de lluvia";
 	}
 	
-	if(anLluvia>3.5){
+	if(anLluvia>178.5){
 		return "Sin lluvia";
 	}
 }
@@ -119,8 +122,8 @@ var anVeleta=datos['veleta'];
 
 var anTempEscalado= fit(anTemp1-anTemp2/*valor*/,-136/*inicio*/,90/*fin*/, -52/*escala salida inicio*/,52/*escala salida fin*/);
 var anHumedadSueloEscalado=fit(anHumedadSuelo/*valor*/,0/*inicio*/,255/*fin*/, 100/*escala salida inicio*/,0/*escala salida fin*/);
-var humedadAmbienteEscalado= fit(humedadAmbiente/*valor*/,6033/*inicio*/,7351/*fin*/, 100/*escala salida inicio*/,0/*escala salida fin*/);
-var anemometroEscalado= fit(anemometro/*valor*/,0/*inicio*/,12000/*fin*/, 0/*escala salida inicio*/,100/*escala salida fin*/); 
+var humedadAmbienteEscalado= fit(humedadAmbiente/*valor*/,2*6033/*inicio*/,2*7351/*fin*/, 100/*escala salida inicio*/,0/*escala salida fin*/);
+var anemometroEscalado= fit(anemometro/*valor*/,0/*inicio*/,10/*fin*/, 0/*escala salida inicio*/,100/*escala salida fin*/); 
 var anLluviaTabla=tablaLluvia(anLluvia);
 var anVeletaTabla=tablaVeleta(anVeleta);
 
