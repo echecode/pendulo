@@ -91,7 +91,7 @@
                
                 var divText=document.createElement('div');
                 
-                divText.setAttribute("id", key+'Text');
+                divText.setAttribute("id", key+'Title');
                 divText.className+=" gridText";
                 divText.innerHTML = textByKey[key];
                 
@@ -180,6 +180,37 @@
 
         }*/
 
+
+
+
+      
+function fit(in0,from0,to0,fromFix0,toFix0){
+
+var a1=from0;
+var a2=to0;
+var b1=1;
+var b2=1;
+var c1=fromFix0;
+var c2=toFix0;
+var den=(a2*b1-a1*b2);
+var res=0;
+
+if(den!=0){
+    //a1x+b1y=c1
+    //a2x+b2y=c2
+    //cramer
+    var x=(b1*c2-b2*c1)/den;
+    var y=(a2*c1-a1*c2)/den;
+    res=in0*x+y;
+
+}else{
+
+    console.log("error div 0");
+}
+return res;
+}//fit(5, 1,100,1,100)
+
+
         //SOCKET IO
         var socket = io.connect('http://localhost', 
             {   'connect_timeout':1000,
@@ -194,18 +225,17 @@
             console.log("rx:"+dataStr);
             var data=JSON.parse(dataStr);
 
-            var keys= ['temp1', 'temp2', 'humA', 'humS', 'lluvia', 'anem', 'veleta'];
-            
+                    
             //test data
-            // {"humA":"29", "humS":"29", "lluvia":"129", "anem":"20","veleta":"33" }
-            var keysToGraph=['temp', 'humA', 'humS', 'lluvia', 'anem', 'veleta'];
+            // {"temp1":"22","temp2":"33", "humA":"29", "humS":"29", "lluvia":"129", "anem":"20","veleta":"33" }
+            var keysToGraph=['temp', 'humA', 'humS', 'lluvia', 'anem', 'veleta'];                    
             
- 			//TODO temp escalar
+            var dataGraph=JSON.parse(escalado(data));
 
-			for (var i = 0; i < keysToGraph.length; i++) {                    
+			for (var i = 0; i < keysToGraph.length; i++) {
 				var key=keysToGraph[i];
-                console.log("key:"+key+ " dat:"+ data[key]);
-                var valor=escalado(key, data[key]);
+                var valor=dataGraph[key];
+                console.log("key:"+key+ " dat:"+ dataGraph[key]);                
                 var divText=document.getElementById(key+'Title');                
                 divText.innerHTML = textByKey[key]+' '+valor;
                 series[key].append(new Date().getTime(), valor);
