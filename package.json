@@ -4,9 +4,8 @@
   "description": "graph json from serial port",
   "main": "gserial.js",
   "dependencies": {
-    "express": "*",
-    "socket.io": "*",
-    "serialport": "*"
+    "serialport": "*",
+    "socket.io": "*"
   },
   "devDependencies": {},
   "scripts": {
