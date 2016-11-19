@@ -37,14 +37,15 @@ html, body {
 }
 
 .gridText{
-	font: bold 1.5em sans-serif;
+	font: bold 1.6em sans-serif;
     width:100%;
     height:auto;
     position:absolute;
-    top:1em;
+    top:.3em;
 }
 
 canvas{
 	display: block;
     margin: 0 auto;   	   
 }
+

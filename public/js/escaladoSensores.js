@@ -72,19 +72,19 @@ function tablaLluvia(anLluvia){
 
 	
 	if(anLluvia>=0 && anLluvia<=76.5){
-		return "Lluvia intensa";
+		return "Intensa";
 	}
 	
 	if(anLluvia>76.5 && anLluvia<=102){
-		return "Lluvia liviana";
+		return "Liviana";
 	}
 	
 	if(anLluvia>102 && anLluvia<=155){
-		return "Alta probabilidad de lluvia";
+		return "Alta probabilidad";
 	}
 	
 	if(anLluvia>155 && anLluvia<=178.5){
-		return "Baja probabilidad de lluvia";
+		return "Baja probabilidad";
 	}
 	
 	if(anLluvia>178.5){

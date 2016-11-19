@@ -10,34 +10,7 @@
     </head>
     <body>
 
-    <!--table>  
-        <tr>
-            <td>
-                <canvas id="humA" ></canvas>
-            <td>
-        </tr>
-        <tr>
-            <td>
-                <canvas id="humS"></canvas>
-            </td>
-        </tr>        
-        <tr>
-            <td>
-                <canvas id="lluvia"></canvas>
-            </td>
-        </tr>        
-        <tr>
-            <td>
-                <canvas id="anem"></canvas>
-            </td>
-        </tr>        
-        <tr>
-            <td>
-                <canvas id="veleta"></canvas>
-            </td>
-        </tr>    
-    </table-->
-
+    
     </body>
     
     <script>
@@ -85,7 +58,9 @@
                                             } else {
                                                 this.className='gridFull';
                                             }; 
-                                            resizeCanvas(this.id.split('Div')[0]);
+                                            var destId=this.id.split('Div')[0];                                          
+                                            resizeCanvas(destId);
+                                            
                                         };
 
                
@@ -106,13 +81,8 @@
         createGrid();
         
 	
-		/*
-        function myYRangeFunction(range) {
-          // TODO implement calculation using range.min and range.max          
-          return {min: 0, max: 255};
-        }*/
-
-            function resizeCanvas(destId) {                
+		
+        function resizeCanvas(destId) {                
                 //canvas[destId].width = window.innerWidth * .8;
                 //canvas[destId].height = window.innerHeight*.8/cant;
 
@@ -122,16 +92,25 @@
                 canvas[destId].height = canvas[destId].offsetHeight;
 
                 //drawStuff(); 
-            }
+        }
 
+
+
+        var escala= { "temp":{ "minVal":-50, "maxVal":50 }, 
+                      "humA":{ "minVal":0, "maxVal":100 },
+                      "humS":{ "minVal":0, "maxVal":100 },
+                      "lluvia":{ "minVal":0, "maxVal":100 },
+                      "anem":{ "minVal": 0, "maxVal":200 },
+                      "veleta":{ "minVal":0, "maxVal":10}
+                   };
+        
 
         function init(destId) {
         	console.log('initialize:'+destId);
             cant = Object.keys(options).length;					
 
-            chart[destId] = new SmoothieChart({
-                                                millisPerPixel: 32,
-                                                minValue:0,maxValue:255,   
+            chart[destId] = new SmoothieChart({ millisPerPixel: 32,
+                                                minValue: escala[destId].minVal,maxValue:escala[destId].maxVal,   
                                                 grid: {fillStyle: '#ffffff', strokeStyle: '#c5c5c5', sharpLines: true, millisPerLine: 2000, verticalSections: 8, borderVisible: false},
                                                 labels: {fillStyle:'rgba(0,0,0,0.5)', precision: 1}, timestampFormatter: SmoothieChart.timeFormatter}
                                                 );
@@ -182,7 +161,9 @@
 
 
 
-
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
       
 function fit(in0,from0,to0,fromFix0,toFix0){
 
@@ -236,8 +217,9 @@ return res;
 				var key=keysToGraph[i];
                 var valor=dataGraph[key];
                 console.log("key:"+key+ " dat:"+ dataGraph[key]);                
-                var divText=document.getElementById(key+'Title');                
-                divText.innerHTML = textByKey[key]+' '+valor;
+                var divText=document.getElementById(key+'Title');     
+                var valToShow=Math.round(valor* 100) / 100; 
+                divText.innerHTML = textByKey[key]+' <br>'+ (isNumeric(valToShow)?valToShow:valor);
                 series[key].append(new Date().getTime(), valor);
             }
 
