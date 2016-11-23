@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 
 var serialPort = require("serialport");         //load serial port library object
 var readline = serialPort.parsers.readline;     //parser-separator for data input
@@ -37,7 +37,7 @@ if (io) {   //server created
     io.on('connection', function (socket) {
 
         if (sp === null) {
-	            sp = new serialPort("COM11", {
+	            sp = new serialPort("COM3", {
 	                baud: 9600,
 	                parser: readline('\r')
 	            });

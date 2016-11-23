@@ -7,7 +7,7 @@
 
         textByKey['humA'] ="Hum. Ambiente";
         textByKey['humS'] ="Hum. Tierra";
-        textByKey['lluvia'] ="Lluvia";
+        textByKey['lluvia'] ="Precipitación";
         textByKey['anem'] ="Anemómetro";
         textByKey['veleta'] ="Orientación Viento";
         textByKey['temp'] ="Temperatura";
@@ -19,12 +19,12 @@
         unitByKey['veleta'] ="";
         unitByKey['temp'] ="ºC";
 
-        options['humA'] =   {lineWidth: 0.8, strokeStyle: '#ff0000', fillStyle: 'rgba(255,25,25,0.20)', grid:{fillStyle: '#eeffee'}};
-        options['humS'] =   {lineWidth: 0.8, strokeStyle: '#00ff00', fillStyle: 'rgba(25,155,25,0.20)'};
-        options['lluvia'] = {lineWidth: 0.8, strokeStyle: '#0000ff', fillStyle: 'rgba(25,25,155,0.20)'};
-        options['anem'] =   {lineWidth: 0.8, strokeStyle: '#444444', fillStyle: 'rgba(100,100,100,0.20)'};
-        options['veleta'] = {lineWidth: 0.8, strokeStyle: '#ffffff', fillStyle: 'rgba(155,155,55,0.30)'};
-        options['temp'] =   {lineWidth: 0.8, strokeStyle: '#ffffff', fillStyle: 'rgba(155,155,55,0.30)'};
+        options['humA'] =   {lineWidth: 0.8, strokeStyle: '#006400', fillStyle: 'rgba(107,184,110,0.60)', grid:{fillStyle: '#eeffee'}};
+        options['humS'] =   {lineWidth: 0.8, strokeStyle: '#8b4513', fillStyle: 'rgba(139,69,19,0.60)'};
+        options['lluvia'] = {lineWidth: 0.8, strokeStyle: '#0000ff', fillStyle: 'rgba(25,25,155,0.60)'};
+        options['anem'] =   {lineWidth: 0.8, strokeStyle: '#444444', fillStyle: 'rgba(100,100,100,0.60)'};
+        options['veleta'] = {lineWidth: 0.8, strokeStyle: '#ffffff', fillStyle: 'rgba(155,155,55,0.60)'};
+        options['temp'] =   {lineWidth: 0.8, strokeStyle: '#ff0000', fillStyle: 'rgba(234,52,44,0.60)'};
         
 
         function createGrid(){
@@ -91,15 +91,6 @@
         }
 
 
-
-        var escala= { "temp":{ "minVal":-50, "maxVal":50 }, 
-                      "humA":{ "minVal":0, "maxVal":100 },
-                      "humS":{ "minVal":0, "maxVal":100 },
-                      "lluvia":{ "minVal":0, "maxVal":100 },
-                      "anem":{ "minVal": 0, "maxVal":200 },
-                      "veleta":{ "minVal":0, "maxVal":10}
-                   };
-        
 
         function init(destId) {
         	console.log('initialize:'+destId);
