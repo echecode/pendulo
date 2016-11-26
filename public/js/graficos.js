@@ -155,8 +155,7 @@
 
 
         //SOCKET IO
-        var socket = io('http://localhost', 
-                       {'connect_timeout':1000,
+        var socket = io({'connect_timeout':1000,
                         'reconnection': true,
                         'reconnectionDelay': 1000,
                         'reconnectionDelayMax': 3000,
