@@ -8,18 +8,20 @@ Graph data from serial port
 
 * nodejs https://nodejs.org/en/download/releases/
 
-###Dependencies
-
-* Serial port library  
-```npm install -g serialport```
-
 ###Graphserial
 
 ```git clone https://github.com/hernaneche/graphserial.git```
 
-To change serial port number, edit index.html, change COM77 for whatever, and reload page
+###Dependencies
+
+* Serialport
+* Socket.io
+
+```npm install```
 
 ###run
+
+To change serial port number, edit gserial.html, change COM77 for whatever, and reload page
 
 ```node gserial.js```
 
