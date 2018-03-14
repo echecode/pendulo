@@ -168,7 +168,7 @@
         socket.on('disconnect', function(){console.log("disconnect")});
 
         socket.on('newServerData', function (dataStr) {
-            console.log("rx:"+dataStr);
+            console.log("rx remote:"+dataStr);
             var data=JSON.parse(dataStr);
                     
             //test data
