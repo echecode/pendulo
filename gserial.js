@@ -40,7 +40,9 @@ if (io) {   //server created
     io.on('connection', function (socket) {
 		
         if (sp === null || parser ==null) {
-	            sp = new serialPort("COM88", {
+	            //sp = new serialPort("/dev/pts/7", {
+	            //sp = new serialPort("/dev/ttyS41", {
+	            sp = new serialPort("/dev/rfcomm0", {
 	                baud: 9600
 	            });
 	            parser = sp.pipe(new Readline({ delimiter: '\r' }));
@@ -61,7 +63,9 @@ if (io) {   //server created
             	 console.log('rx local: ' + data);//.toString('hex'));
         		});
         socket.on('clientData', function (clientData) {
-            console.log("client" + clientData);
+            console.log("client: " + clientData);
+            sp.write(clientData);
+            sp.drain();
         });
 		        
     });

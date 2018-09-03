@@ -29,29 +29,29 @@ return res;
 
 
 function tablaVeleta(anVeleta){
-	
+
 	var texto;
 
 	if(anVeleta>195){
 		texto= "Oeste";
 	}
-	
+
 	if(anVeleta>128 && anVeleta<=195){
 		texto= "Nor-Oeste";
 	}
-	
+
 	if(anVeleta>75 && anVeleta<=128){
 		texto= "Norte";
 	}
-	
+
 	if(anVeleta>39 && anVeleta<=75){
 		texto= "Sur-Oeste";
 	}
-	
+
 	if(anVeleta>21 && anVeleta<=39){
 		texto= "Nor-Este";
 	}
-	
+
 	if(anVeleta>10 && anVeleta<=21){
 		texto= "Sur";
 	}
@@ -63,7 +63,7 @@ function tablaVeleta(anVeleta){
 	if(anVeleta>=0 && anVeleta<=5){
 		texto= "Este";
 	}
-	
+
 	texto= '<h1>'+texto+'</h1>'
 	return texto;
 }
@@ -73,24 +73,24 @@ function tablaVeleta(anVeleta){
 
 function tablaLluvia(anLluvia){
 
-	var texto; 
+	var texto;
 
 	if(anLluvia>=0 && anLluvia<=76.5){
 		texto= "Intensa";
 	}
-	
+
 	if(anLluvia>76.5 && anLluvia<=102){
 		texto= "Moderada";
 	}
-	
+
 	if(anLluvia>102 && anLluvia<=155){
 		texto= "Llovizna";
 	}
-	
+
 	if(anLluvia>155 && anLluvia<=178.5){
 		texto= "Sin lluvia";
 	}
-	
+
 	if(anLluvia>178.5){
 		texto= "Sin lluvia";
 	}
@@ -108,50 +108,45 @@ function tope100(arg) {
 
 
 
-var escala= { "temp":{ "minVal":-5, "maxVal":35 }, 
-              "humA":{ "minVal":0, "maxVal":100 },
-              "humS":{ "minVal":0, "maxVal":100 },
-              "lluvia":{ "minVal":0, "maxVal":100 },
-              "anem":{ "minVal": 0, "maxVal":200 },
-              "veleta":{ "minVal":0, "maxVal":10}
+var escala= { "t":{ "minVal":0, "maxVal":10000},
+              "e":{ "minVal":-200, "maxVal":200, "horizontalLines":[{color:'#000000',lineWidth:1,value:0},{color:'#880000',lineWidth:1,value:164},{color:'#880000',lineWidth:1,value:-164}]},
+              "c":{ "minVal":-1500, "maxVal":1500}, //"horizontalLines":[{color:'#000000',lineWidth:1,value:0},{color:'#880000',lineWidth:1,value:33},{color:'#880000',lineWidth:1,value:-33}]},
+              "p":{ "minVal":0, "maxVal":1024},
+              "Kp":{ "minVal":0, "maxVal":20},
+              "Ki":{ "minVal":0, "maxVal":20},
+              "Kd":{ "minVal":0, "maxVal":20},
+              "Kp2":{ "minVal":0, "maxVal":20},
+              "Ki2":{ "minVal":0, "maxVal":20},
+              "Kd2":{ "minVal":0, "maxVal":20}
        };
-        
+
 
 function escalado(datos){
 
+/*var anT=datos['t'];*/
+var anE=datos['e'];
+var anC=datos['c'];
+var anPwm=datos['pwm'];
+/*var anKp=datos['Kp'];
+var anKi=datos['Ki'];
+var anKd=datos['Kd'];
+var anKp2=datos['Kp2'];
+var anKi2=datos['Ki2'];
+var anKd2=datos['Kd2'];*/
 
-var keys= ['temp1', 'temp2', 'humA', 'humS', 'lluvia', 'anem', 'veleta'];
+//var anTempEscalado= fit(anTemp1-anTemp2/*valor*/,-136/*inicio*/,90/*fin*/, -52/*escala salida inicio*/,52/*escala salida fin*/);
+//var anHumedadSueloEscalado=tope100( fit(anHumedadSuelo/*valor*/,25/*inicio*/,240/*fin*/, 100/*escala salida inicio*/,0/*escala salida fin*/));
+//var humedadAmbienteEscalado= tope100( fit(humedadAmbiente/*valor*/,2*6033/*inicio*/,2*7351/*fin*/, 100/*escala salida inicio*/,0/*escala salida fin*/));
+//var anemometroEscalado= fit(anemometro/*valor*/,0/*inicio*/,10/*fin*/, 0/*escala salida inicio*/,100/*escala salida fin*/);
+//var anLluviaTabla=tablaLluvia(anLluvia);
+//var anVeletaTabla=tablaVeleta(anVeleta);
 
-var anTemp1=datos['temp1'];
-var anTemp2=datos['temp2'];
-var anHumedadSuelo=datos['humS'];
-var humedadAmbiente=datos['humA'];
-var anemometro=datos['anem'];
-var anLluvia=datos['lluvia'];
-var anVeleta=datos['veleta'];
+var eEscalado= fit(anE/*valor*/,-511/*inicio*/,512/*fin*/, -135/*escala salida inicio*/,135/*escala salida fin*/);
 
-var anTempEscalado= fit(anTemp1-anTemp2/*valor*/,-136/*inicio*/,90/*fin*/, -52/*escala salida inicio*/,52/*escala salida fin*/);
-var anHumedadSueloEscalado=tope100( fit(anHumedadSuelo/*valor*/,25/*inicio*/,240/*fin*/, 100/*escala salida inicio*/,0/*escala salida fin*/));
-var humedadAmbienteEscalado= tope100( fit(humedadAmbiente/*valor*/,2*6033/*inicio*/,2*7351/*fin*/, 100/*escala salida inicio*/,0/*escala salida fin*/));
-var anemometroEscalado= fit(anemometro/*valor*/,0/*inicio*/,10/*fin*/, 0/*escala salida inicio*/,100/*escala salida fin*/); 
-var anLluviaTabla=tablaLluvia(anLluvia);
-var anVeletaTabla=tablaVeleta(anVeleta);
 
-console.log("temp:"+anTempEscalado);
-console.log("hum Suelo:"+anHumedadSueloEscalado);
-console.log("hum Amb:"+humedadAmbienteEscalado);
-console.log("anem:"+anemometroEscalado);
-console.log("lluvia:"+anLluviaTabla);
-console.log("veleta:"+anVeletaTabla);
-
-var ret= '{"temp":"'+anTempEscalado+'",'+
-		 '"humA":"'+humedadAmbienteEscalado+'",'+
-		 '"humS":"'+anHumedadSueloEscalado+'",'+
-		 '"lluvia":"'+anLluviaTabla+'",'+
-		 '"anem":"'+anemometroEscalado+'",'+
-		 '"veleta":"'+anVeletaTabla+'"'+'}';
-
-console.log(ret);
+var ret= '{"e":"'+eEscalado+'",'+
+		 '"c":"'+anC+'",'+
+		 '"pwm":"'+anPwm+'"}';
 
 return ret;
 
