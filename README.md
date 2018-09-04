@@ -1,5 +1,5 @@
 # Graphserial
-Graph data from serial port
+Graph data from serial port configured
 
 ## Install
 ### Pre
