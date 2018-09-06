@@ -19,16 +19,17 @@
                 <tr><td>Ki2</td><td id="ki2value">?</td><td><input id="ki2" type="range" min="0" max="6" name="ki2" onClick='enviar("ki2");'></td><td><input id="btnki2" type='button' onClick='enviar("ki2");' value="Set"></td></tr>
                 <tr><td>Kd2</td><td id="kd2value">?</td><td><input id="kd2" type="range" min="0" max="6" name="kd2" onClick='enviar("kd2");'></td><td><input id="btnkd2" type='button' onClick='enviar("kd2");' value="Set"></td></tr>
                 <tr><td colspan="3"><input type='button' onClick='enviar("z");' value="Set point = Posicion actual"></td></tr>
-                <tr><td rowspan="3">Direccion Step </td><td id="ds1value">?</td><td><input id="ds1" type="radio" name="dirstep" onClick='enviar("ds1");'>Izquierda</td><td><input id="btndirstep1" type='button' onClick='enviar("ds1");' value="Set"></td></tr>
-                <tr>                                    <td id="ds0value">?</td><td><input id="ds0" type="radio" name="dirstep" onClick='enviar("ds0");'>Anulado  </td><td><input id="btndirstep0" type='button' onClick='enviar("ds0");' value="Set"></td></tr>
-                <tr>                                    <td id="ds2value">?</td><td><input id="ds2" type="radio" name="dirstep" onClick='enviar("ds2");'>Derecha  </td><td><input id="btndirstep2" type='button' onClick='enviar("ds2");' value="Set"></td></tr>
-                <tr><td>PotenciaStep [1,1023] </td><td id="psvalue">?</td><td><input id="ps" type="text" name="potenciastep"></td><td><input id="btnpotenciastep" type='button' onClick='enviar("ps");' value="Set"></td></tr>
+                <tr><td rowspan="3">Direccion Step </td><td><input id="ds1value" type="radio" name="dirstepvalue" disabled></td><td><input id="ds1" type="radio" name="dirstep" onClick='enviar("ds1");'>Izquierda</td><td><input id="btndirstep1" type='button' onClick='enviar("ds1");' value="Set"></td></tr>
+                <tr>                                    <td><input id="ds0value" type="radio" name="dirstepvalue" disabled></td><td><input id="ds0" type="radio" name="dirstep" onClick='enviar("ds0");'>Anulado  </td><td><input id="btndirstep0" type='button' onClick='enviar("ds0");' value="Set"></td></tr>
+                <tr>                                    <td><input id="ds2value" type="radio" name="dirstepvalue" disabled></td><td><input id="ds2" type="radio" name="dirstep" onClick='enviar("ds2");'>Derecha  </td><td><input id="btndirstep2" type='button' onClick='enviar("ds2");' value="Set"></td></tr>
+
                 <tr><td>dutyPWMmin [0,1023] </td><td id="dmvalue">?</td><td><input id="dm" type="text" name="dutyPWMmin"></td><td><input id="btndutymin" type='button' onClick='enviar("dm");' value="Set"></td></tr>
                 <tr><td>dutyPWMLimit [0,1023] </td><td id="dlvalue">?</td><td><input id="dl" type="text" name="dutyPWMlimit"></td><td><input id="btndutylimit" type='button' onClick='enviar("dl");' value="Set"></td></tr>
                 <tr><td>dutyPWMTimeout [int] </td><td id="dtvalue">?</td><td><input id="dt" type="text" name="dutyPWMtimeout"></td><td><input id="btndutytimeout" type='button' onClick='enviar("dt");' value="Set"></td></tr>
-                <tr><td>Step [ciclos] </td><td>---</td><td><input id="s" type="text" name="step"></td><td><input id="btnstep" type='button' onClick='enviar("s");' value="Send"></td></tr>
-                <tr><td>Control On </td><td id="cOnvalue">?</td><td><input id="cOn" type="checkbox" onClick='enviar("cOn");' name="controlOn"></td><td><input id="btncOn" type='button' onClick='enviar("cOn");' value="Send"></td></tr>
-                <tr><td colspan="3"><input type='button' onClick='enviar("r");' value="Recuperar estado"></td></tr>
+                <tr><td>PotenciaStep [1,1023] </td><td id="psvalue">?</td><td><input id="ps" type="text" name="potenciastep"></td><td><input id="btnpotenciastep" type='button' onClick='enviar("ps");' value="Set"></td></tr>
+                <tr><td>Step [ciclos] </td><td></td><td><input id="s" type="text" name="step"></td><td><input id="btnstep" type='button' onClick='enviar("s");' value="Disparar Escalon"></td></tr>
+                <tr><td>Control On </td><td><input id="cOnvalue" type="checkbox" disabled></td><td><input id="cOn" type="checkbox" onClick='enviar("cOn");' name="controlOn"></td><td><input id="btncOn" type='button' onClick='enviar("cOn");' value="Send"></td></tr>
+                <tr><td colspan="3"><input type='button' onClick='enviar("r");' value="Actualizar estado"></td></tr>
             </table>
         </div>
     </body>

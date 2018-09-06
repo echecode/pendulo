@@ -50,7 +50,7 @@
     };
     protocol["cOn"] = {
       pic2web: function(value) {
-        document.getElementById("cOnvalue").innerHTML = value;
+        document.getElementById("cOnvalue").checked = value;
       },
       web2pic: function() {
         return "c" + ((document.getElementById("cOn").checked) ? '1' : '0') + "\r";
@@ -58,7 +58,7 @@
     };
     protocol["ds0"] = {
       pic2web: function(value) {
-        document.getElementById("dsvalue").innerHTML = value;
+        document.getElementById("dsvalue").checked = true;
       },
       web2pic: function() {
         return "m0\r";
@@ -66,7 +66,7 @@
     };
     protocol["ds1"] = {
       pic2web: function(value) {
-        document.getElementById("dsvalue").innerHTML = value;
+        document.getElementById("dsvalue").checked = true;
       },
       web2pic: function() {
         return "m1\r";
@@ -74,7 +74,7 @@
     };
     protocol["ds2"] = {
       pic2web: function(value) {
-        document.getElementById("dsvalue").innerHTML = value;
+        document.getElementById("dsvalue").checked = true;
       },
       web2pic: function() {
         return "m2\r";
