@@ -3,87 +3,117 @@
     protocol["kp"] = {
       pic2web: function(value) {
         document.getElementById("kpvalue").innerHTML = value;
+        document.getElementById("kp").value = value;
+        document.getElementById("kpvalue").style.color = "#4CAF50";
       },
       web2pic: function() {
+        document.getElementById("kpvalue").style.color = "#EEEE11";
         return "p" + document.getElementById("kp").value + "\r";
       }
     };
     protocol["ki"] = {
       pic2web: function(value) {
         document.getElementById("kivalue").innerHTML = value;
+        document.getElementById("ki").value = value;
+        document.getElementById("kivalue").style.color = "#4CAF50";
       },
       web2pic: function() {
+        document.getElementById("kivalue").style.color = "#EEEE11";
         return "i" + document.getElementById("ki").value + "\r";
       }
     };
     protocol["kd"] = {
       pic2web: function(value) {
         document.getElementById("kdvalue").innerHTML = value;
+        document.getElementById("kd").value = value;
+        document.getElementById("kdvalue").style.color = "#4CAF50";
       },
       web2pic: function() {
+        document.getElementById("kdvalue").style.color = "#EEEE11";
         return "d" + document.getElementById("kd").value + "\r";
       }
     };
     protocol["kp2"] = {
       pic2web: function(value) {
         document.getElementById("kp2value").innerHTML = value;
+        document.getElementById("kp2").value = value;
+        document.getElementById("kp2value").style.color = "#4CAF50";
       },
       web2pic: function() {
+        document.getElementById("kp2value").style.color = "#EEEE11";
         return "q" + document.getElementById("kp2").value + "\r";
       }
     };
     protocol["ki2"] = {
       pic2web: function(value) {
         document.getElementById("ki2value").innerHTML = value;
+        document.getElementById("ki2").value = value;
+        document.getElementById("ki2value").style.color = "#4CAF50";
       },
       web2pic: function() {
+        document.getElementById("ki2value").style.color = "#EEEE11";
         return "w" + document.getElementById("ki2").value + "\r";
       }
     };
     protocol["kd2"] = {
       pic2web: function(value) {
         document.getElementById("kd2value").innerHTML = value;
+        document.getElementById("kd2").value = value;
+        document.getElementById("kd2value").style.color = "#4CAF50";
       },
       web2pic: function() {
+        document.getElementById("kd2value").style.color = "#EEEE11";
         return "e" + document.getElementById("kd2").value + "\r";
       }
     };
     protocol["cOn"] = {
       pic2web: function(value) {
-        document.getElementById("cOnvalue").checked = value;
+        document.getElementById("cOncheck").checked = value;
+          document.getElementById("cOn").style.background = "#4CAF50";
       },
       web2pic: function() {
+        document.getElementById("cOn").style.background = "yellow";
         return "c" + ((document.getElementById("cOn").checked) ? '1' : '0') + "\r";
       }
     };
     protocol["ds0"] = {
       pic2web: function(value) {
-        document.getElementById("dsvalue").checked = true;
       },
       web2pic: function() {
+      document.getElementById("ds0").style.background = "yellow";
+      document.getElementById("ds1").style.background = "#d3d3d3";
+      document.getElementById("ds2").style.background = "#d3d3d3";
         return "m0\r";
       }
     };
     protocol["ds1"] = {
       pic2web: function(value) {
-        document.getElementById("dsvalue").checked = true;
       },
       web2pic: function() {
+      document.getElementById("ds0").style.background = "#d3d3d3";
+      document.getElementById("ds1").style.background = "yellow";
+      document.getElementById("ds2").style.background = "#d3d3d3";
         return "m1\r";
       }
     };
     protocol["ds2"] = {
       pic2web: function(value) {
-        document.getElementById("dsvalue").checked = true;
       },
       web2pic: function() {
+      document.getElementById("ds0").style.background = "#d3d3d3";
+      document.getElementById("ds1").style.background = "#d3d3d3";
+      document.getElementById("ds2").style.background = "yellow";
         return "m2\r";
       }
     };
     protocol["ds"] = {
       pic2web: function(value) {
-        var id = "ds" + value + "value";
-        document.getElementById(id).checked = true;
+        var id = "ds" + value;
+        document.getElementById(id+"check").checked = true;
+        document.getElementById("ds0").style.background = "#d3d3d3";
+        document.getElementById("ds1").style.background = "#d3d3d3";
+        document.getElementById("ds2").style.background = "#d3d3d3";
+        document.getElementById(id).style.background = "#4CAF50";
       },
       web2pic: function() {
         return "m0\r";
@@ -91,7 +121,8 @@
     };
     protocol["ps"] = {
       pic2web: function(value) {
-        document.getElementById("psvalue").innerHTML = value;
+        document.getElementById("ps").value = value;
+        document.getElementById("ps").style.color = "#4CAF50";
       },
       web2pic: function() {
         return "n" + document.getElementById("ps").value + "\r";
@@ -99,7 +130,8 @@
     };
     protocol["dm"] = {
       pic2web: function(value) {
-        document.getElementById("dmvalue").innerHTML = value;
+        document.getElementById("dm").value = value;
+        document.getElementById("dm").style.color = "#4CAF50";
       },
       web2pic: function() {
         return "3" + document.getElementById("dm").value + "\r";
@@ -107,7 +139,8 @@
     };
     protocol["dl"] = {
       pic2web: function(value) {
-        document.getElementById("dlvalue").innerHTML = value;
+        document.getElementById("dl").value = value;
+        document.getElementById("dl").style.color = "#4CAF50";
       },
       web2pic: function() {
         return "1" + document.getElementById("dl").value + "\r";
@@ -115,7 +148,8 @@
     };
     protocol["dt"] = {
       pic2web: function(value) {
-        document.getElementById("dtvalue").innerHTML = value;
+        document.getElementById("dt").value = value;
+        document.getElementById("dt").style.color = "#4CAF50";
       },
       web2pic: function() {
         return "2" + document.getElementById("dt").value + "\r";
@@ -145,6 +179,18 @@
 
     var socket;
 
+    function verificarCampo(event,campo) {
+      event.preventDefault();
+      campo.style.color = "blue"
+      if (event.keyCode === 13) {
+      campo.style.color = "yellow"
+        enviar(campo.id);
+      }
+    if (event.keyCode == 27) {  // 27 is the ESC key
+        alert ("You pressed the Escape key!");
+    }
+    }
+
 
     function getGraficasStructure() {
       var graficas = {};
@@ -157,6 +203,8 @@
         },
         lineas: {
           e: {
+            nombre: 'Error',
+            unidad: 'º',
             lineWidth: 1.8,
             strokeStyle: '#006400',
             /*fillStyle: 'rgba(107,184,110,0.60)',*/
@@ -165,6 +213,8 @@
             }
           },
           c: {
+            nombre: 'Control',
+            unidad: 'watts',
             lineWidth: 0.8,
             strokeStyle: '#640000',
             /*fillStyle: 'rgba(107,184,110,0.60)',*/
@@ -213,6 +263,8 @@
         },
         lineas: {
           e: {
+            nombre: 'Error',
+            unidad: 'º',
             lineWidth: 1.8,
             strokeStyle: '#006400',
             /*fillStyle: 'rgba(107,184,110,0.60)',*/
@@ -261,6 +313,8 @@
         },
         lineas: {
           c: {
+            nombre: 'Control',
+            unidad: 'watts',
             lineWidth: 1.8,
             strokeStyle: '#006400',
             /*fillStyle: 'rgba(107,184,110,0.60)',*/
@@ -343,8 +397,8 @@
 
 
     function resizeCanvas(canvas) {
-      canvas.style.width = '95%';
-      canvas.style.height = '95%';
+      canvas.style.width = '100%';
+      canvas.style.height = '100%';
       canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
     }
@@ -470,6 +524,12 @@
             if (graficas[grafico].lineas.hasOwnProperty(linea)) {
               if (seriesKeys.indexOf(linea) === -1) {
                 seriesKeys.push(linea);
+
+                var divLiveVars = document.getElementById('liveVars');
+                var divVar = document.createElement('div');
+                divVar.innerHTML = graficas[grafico].lineas[linea].nombre + '  <span id="' + linea + 'Live"></span>  ' + graficas[grafico].lineas[linea].unidad;
+                divLiveVars.appendChild(divVar);
+                //document.getElementById('liveVars').appendChild(document.createElement('div').setAttribute("id", linea + 'Live'));
               }
             }
           }
@@ -522,7 +582,7 @@
         var data = JSON.parse(dataStr); // los guarda en data
 
         // Ejemplo de data:
-        // {"t":0,"e":0,"c":0,"p":0[,"r":1,"kp":1,"ki":0,"kd":0,"kp2":1,"ki2":0,"kd2":0,"cOn":1,"ds":1,"ps":700,"dm":5,"dl":600,"dt":5]}     []: Solo se recibe a pedido de r=1
+        // {"t":0,"e":0,"c":0,"p":0,"r":1,"kp":1,"ki":0,"kd":0,"kp2":1,"ki2":0,"kd2":0,"cOn":1,"ds":1,"ps":700,"dm":5,"dl":600,"dt":5}     []: Solo se recibe a pedido de r=1
         /*
 	            t   -> PIC -> tik           -> descripcion:
 	            e   -> PIC -> error         -> descripcion:
@@ -548,8 +608,8 @@
           if ((data.hasOwnProperty(elemento)) && !(seriesKeys.indexOf(elemento) === -1)) {
             var valor = data[elemento];
             var valToShow = Math.round(valor * 10) / 10;
-              //TODO: grafico.divText.innerHTML = grafico.titulo + ' <br>' + (isNumeric(valToShow) ? valToShow : valor) + ' ' + grafico.unidades[???];????
-              series[key].append(new Date().getTime(), valor);
+            document.getElementById(elemento + 'Live').innerHTML = (isNumeric(valToShow) ? valToShow : valor);
+            series[elemento].append(new Date().getTime(), valor);
           }
         }
         /*var keysToGraph = ['e', 'c']; //,'p'];                // Variables de 'data' a graficar

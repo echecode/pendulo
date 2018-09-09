@@ -9,28 +9,55 @@
         <link rel="stylesheet" type="text/css" href="css/gserial.css"/>
     </head>
     <body>
-        <div style="float:right; width:20%; padding:15px">
+        <div id="menu" style="display:block;float:left;padding:10px;width:20%">
+          <div id="Botones"style="display:none;">
+            <div id="BotonConstantesPID" style="background: #00FFA0; margin-bottom:0px" onclick="document.getElementById('menu').style.background=this.style.background;document.getElementById('ConstantesPID').style.display='inline'">
+              ConstantesPID
+            </div>
+              <div id="BotonLimitesDuty" style="background: #00A0FF; margin-bottom:0px" onclick="document.getElementById('menu').style.background=this.style.background">
+                LimitesDuty
+              </div>
+                <div id="BotonEscalon" style="background: #00FFFF; margin-bottom:0px" onclick="document.getElementById('menu').style.background=this.style.background">
+                  Escalon
+                </div>
+                  <div id="BotonControl" style="background: #FF00A0; margin-bottom:0px" onclick="document.getElementById('menu').style.background=this.style.background">
+                    Control
+                  </div>
+            </div>
+          <div id="ConstantesPID" style="background:#F8E6E0;margin-top:15px;" >
             <table>
-                <tr><td>Parametro</td><td>Valor<br>actual</td><td>Nuevo valor</td><td>Enviar</td></tr>
-                <tr><td>Kp</td><td id="kpvalue">?</td><td><input id="kp" type="range" min="0" max="6000" name="kp" value="1000" onClick='enviar("kp");' ></td><td><input id="btnkp" type='button' onClick='enviar("kp");' value="Set"></td></tr>
-                <tr><td>Ki</td><td id="kivalue">?</td><td><input id="ki" type="range" min="0" max="200" name="ki" onClick='enviar("ki");'></td><td><input id="btnki" type='button' onClick='enviar("ki");' value="Set"></td></tr>
-                <tr><td>Kd</td><td id="kdvalue">?</td><td><input id="kd" type="range" min="0" max="20000" name="kd" onClick='enviar("kd");'></td><td><input id="btnkd" type='button' onClick='enviar("kd");' value="Set"></td></tr>
-                <tr><td>Kp2</td><td id="kp2value">?</td><td><input id="kp2" type="range" min="0" max="10" name="kp2" onClick='enviar("kp2");'></td><td><input id="btnkp2" type='button' onClick='enviar("kp2");' value="Set"></td></tr>
-                <tr><td>Ki2</td><td id="ki2value">?</td><td><input id="ki2" type="range" min="0" max="6" name="ki2" onClick='enviar("ki2");'></td><td><input id="btnki2" type='button' onClick='enviar("ki2");' value="Set"></td></tr>
-                <tr><td>Kd2</td><td id="kd2value">?</td><td><input id="kd2" type="range" min="0" max="6" name="kd2" onClick='enviar("kd2");'></td><td><input id="btnkd2" type='button' onClick='enviar("kd2");' value="Set"></td></tr>
-                <tr><td colspan="3"><input type='button' onClick='enviar("z");' value="Set point = Posicion actual"></td></tr>
-                <tr><td rowspan="3">Direccion Step </td><td><input id="ds1value" type="radio" name="dirstepvalue" disabled></td><td><input id="ds1" type="radio" name="dirstep" onClick='enviar("ds1");'>Izquierda</td><td><input id="btndirstep1" type='button' onClick='enviar("ds1");' value="Set"></td></tr>
-                <tr>                                    <td><input id="ds0value" type="radio" name="dirstepvalue" disabled></td><td><input id="ds0" type="radio" name="dirstep" onClick='enviar("ds0");'>Anulado  </td><td><input id="btndirstep0" type='button' onClick='enviar("ds0");' value="Set"></td></tr>
-                <tr>                                    <td><input id="ds2value" type="radio" name="dirstepvalue" disabled></td><td><input id="ds2" type="radio" name="dirstep" onClick='enviar("ds2");'>Derecha  </td><td><input id="btndirstep2" type='button' onClick='enviar("ds2");' value="Set"></td></tr>
-
-                <tr><td>dutyPWMmin [0,1023] </td><td id="dmvalue">?</td><td><input id="dm" type="text" name="dutyPWMmin"></td><td><input id="btndutymin" type='button' onClick='enviar("dm");' value="Set"></td></tr>
-                <tr><td>dutyPWMLimit [0,1023] </td><td id="dlvalue">?</td><td><input id="dl" type="text" name="dutyPWMlimit"></td><td><input id="btndutylimit" type='button' onClick='enviar("dl");' value="Set"></td></tr>
-                <tr><td>dutyPWMTimeout [int] </td><td id="dtvalue">?</td><td><input id="dt" type="text" name="dutyPWMtimeout"></td><td><input id="btndutytimeout" type='button' onClick='enviar("dt");' value="Set"></td></tr>
-                <tr><td>PotenciaStep [1,1023] </td><td id="psvalue">?</td><td><input id="ps" type="text" name="potenciastep"></td><td><input id="btnpotenciastep" type='button' onClick='enviar("ps");' value="Set"></td></tr>
-                <tr><td>Step [ciclos] </td><td></td><td><input id="s" type="text" name="step"></td><td><input id="btnstep" type='button' onClick='enviar("s");' value="Disparar Escalon"></td></tr>
-                <tr><td>Control On </td><td><input id="cOnvalue" type="checkbox" disabled></td><td><input id="cOn" type="checkbox" onClick='enviar("cOn");' name="controlOn"></td><td><input id="btncOn" type='button' onClick='enviar("cOn");' value="Send"></td></tr>
-                <tr><td colspan="3"><input type='button' onClick='enviar("r");' value="Actualizar estado"></td></tr>
+                <tr><td>Kp</td><td id="kpvalue" style="width:150px">?</td><td class="slidecontainer"><input id="kp" class="slider" type="range" min="0" max="6000" name="kp" value="1000" onClick='enviar("kp");' oninput="a=document.getElementById(this.id+'value');a.innerHTML=this.value;a.style.color='#0000EE'" ></td></tr>
+                <tr><td>Ki</td><td id="kivalue">?</td><td class="slidecontainer"><input id="ki" class="slider" type="range" min="0" max="200" name="ki" onClick='enviar("ki");' oninput="a=document.getElementById(this.id+'value');a.innerHTML=this.value;a.style.color='#0000EE'"></td></tr>
+                <tr><td>Kd</td><td id="kdvalue">?</td><td class="slidecontainer"><input id="kd" class="slider" type="range" min="0" max="20000" name="kd" onClick='enviar("kd");' oninput="a=document.getElementById(this.id+'value');a.innerHTML=this.value;a.style.color='#0000EE'"></td></tr>
+                <tr><td>Kp2</td><td id="kp2value">?</td><td><input id="kp2" class="slider" type="range" min="0" max="10" name="kp2" onClick='enviar("kp2");' oninput="a=document.getElementById(this.id+'value');a.innerHTML=this.value;a.style.color='#0000EE'"></td></tr>
+                <tr><td>Ki2</td><td id="ki2value">?</td><td><input id="ki2" class="slider" type="range" min="0" max="6" name="ki2" onClick='enviar("ki2");' oninput="a=document.getElementById(this.id+'value');a.innerHTML=this.value;a.style.color='#0000EE'"></td></tr>
+                <tr><td>Kd2</td><td id="kd2value">?</td><td><input id="kd2" class="slider" type="range" min="0" max="6" name="kd2" onClick='enviar("kd2");' oninput="a=document.getElementById(this.id+'value');a.innerHTML=this.value;a.style.color='#0000EE'"></td></tr>
             </table>
+          </div>
+          <div id="LimitesDuty" style="background:#E6F8E0;margin-top:15px;">
+            <table>
+                <tr><td>dutyPWMmin [0,1023] </td><td><input id="dm" type="text" name="dutyPWMmin" onkeyup="verificarCampo(event,this);"></td></tr>
+                <tr><td>dutyPWMLimit [0,1023] </td><td><input id="dl" type="text" name="dutyPWMlimit" onkeyup="verificarCampo(event,this);"></td></tr>
+                <tr><td>dutyPWMTimeout [int] </td><td><input id="dt" type="text" name="dutyPWMtimeout" onkeyup="verificarCampo(event,this);"></td></tr>
+            </table>
+          </div>
+          <div id="Escalon" style="background:#E0ECF8;margin-top:15px;">
+            <table>
+                <tr><td rowspan="3">Direccion Step </td><td><label class="markcontainer"><input id="ds1check" type="radio" name="dirstep" onClick='enviar("ds1");'><span id="ds1" class="radiomark"></span>Izquierda</td></tr>
+                <tr>                                    <td><label class="markcontainer"><input id="ds0check" type="radio" name="dirstep" onClick='enviar("ds0");'><span id="ds0" class="radiomark"></span>Anulado  </td></tr>
+                <tr>                                    <td><label class="markcontainer"><input id="ds2check" type="radio" name="dirstep" onClick='enviar("ds2");'><span id="ds2" class="radiomark"></span>Derecha  </td></tr>
+                <tr><td>PotenciaStep [1,1023] </td><td><input id="ps" type="text" name="potenciastep" onkeyup="verificarCampo(event,this);"></td></tr>
+                <tr><td>Step [ciclos] </td><td><input id="s" type="text" name="step"></td></tr>
+                <tr><td colspan="2"><input id="btnstep" type='button' onClick='enviar("s");' value="Disparar Escalon"></td></tr>
+            </table>
+          </div>
+          <div id="Control" style="background:#F8E0F7;margin-top:15px;">
+            <table>
+                <tr><td>Control On </td><td><label class="markcontainer"><input id="cOncheck" type="checkbox" onClick='enviar("cOn");'><span id="cOn" class="checkmark"></span></td></tr>
+                <tr><td colspan="2"><input type='button' onClick='enviar("z");' value="Set point = Posicion actual"></td></tr>
+                <tr><td colspan="2"><input type='button' onClick='enviar("r");' value="Actualizar estado"></td></tr>
+            </table>
+            <div id='liveVars'></div>
         </div>
     </body>
     <script src="/js/graficos.js"></script>

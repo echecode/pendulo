@@ -11,18 +11,18 @@ app.listen(80);
 
 function handler (req, res) {
 
-	var errMgm=function(err, data) {	
+	var errMgm=function(err, data) {
 			    if (err) {
 			      res.writeHead(500);
 			      return res.end('Error loading static html');
 			    }
 
 			    res.writeHead(200);
-			    res.end(data);		  
+			    res.end(data);
 	};
 
 	console.log(req['url']);
-	if(req['url']==="/"){	
+	if(req['url']==="/"){
 	  fs.readFile(__dirname+ '/public/' + 'gsmooth.html',errMgm);
 	}else{
 		fs.readFile(__dirname + '/public/' + req['url'], errMgm);
@@ -30,7 +30,7 @@ function handler (req, res) {
 }
 
 
-if (io) {   //server created 
+if (io) {   //server created
     console.log('listening');
     console.log('Formato ejemplo:');
     console.log('{"temp1":"22","temp2":"33", "humA":"29", "humS":"29", "lluvia":"129", "anem":"20","veleta":"33"}');
@@ -38,23 +38,23 @@ if (io) {   //server created
     var sp = null;
     var parser;
     io.on('connection', function (socket) {
-		
+
         if (sp === null || parser ==null) {
 	            //sp = new serialPort("/dev/pts/7", {
-	            //sp = new serialPort("/dev/ttyS41", {
-	            sp = new serialPort("/dev/rfcomm0", {
+	            sp = new serialPort("/dev/ttyS41", {
+	            //sp = new serialPort("/dev/rfcomm0", {
 	                baud: 9600
 	            });
 	            parser = sp.pipe(new Readline({ delimiter: '\r' }));
-	            
+
         		sp.on("open", function () {
 		            console.log('open serial port');
-		        });        		
+		        });
 
 		        sp.on('error', function (data) {
 		            console.log('error:'+data);
 		        });
-				
+
 		}else{
         	console.log("ya no necesita abrir puerto");
         }
@@ -67,7 +67,7 @@ if (io) {   //server created
             sp.write(clientData);
             sp.drain();
         });
-		        
+
     });
 }
 
@@ -90,5 +90,3 @@ appExpress.get('/', function (req, res) {
     res.sendFile(__dirname + '/public/' + 'gsmooth.html');
 });
 */
-
-

@@ -1,51 +1,230 @@
-
 html, body {
-    height: 100%;
-    width: 100%;
-    /*overflow: hidden;  */  
+  height: 100%;
+  width: 100%;
+  /*overflow: hidden;  */
 }
 
-.gridFull{
-	border: 2px double #4e4;
-    z-index: 9999; 
-    margin-top: 0px;
-    width: 100%; 
-    height: 100%; 
-    position: absolute; 
-    top: 0; 
-    left: 0;     
-    text-align: center;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
-    box-sizing: border-box;
-    background: #eafaeb;
- }
-
-.grid{
-	z-index: 1;
-    width: 75%;
-    height: 45%;
-    float: left;
-    border: 1px dotted #444;
-    text-align: center;
-    position:relative;
+.gridFull {
+  border: 2px double #4e4;
+  z-index: 9999;
+  margin-top: 0px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: center;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  background: #eafaeb;
 }
 
-.grid:hover {   
-   border: 1px solid #222;
+.grid {
+  z-index: 1;
+  width: 75%;
+  height: 45%;
+  float: left;
+  border: 1px dotted #444;
+  text-align: center;
+  position: relative;
 }
 
-.gridText{
-	font: bold 1.8em sans-serif;
-    width:100%;
-    height:auto;
-    position:absolute;
-    top:.3em;
+.grid:hover {
+  border: 1px solid #222;
 }
 
-canvas{
-	display: block;
-    margin: 0 auto;   	   
+.gridText {
+  font: bold 1.8em sans-serif;
+  width: 100%;
+  height: auto;
+  position: absolute;
+  top: .3em;
 }
 
+canvas {
+  display: block;
+  margin: 0 auto;
+}
+
+input[type=text] {
+  width: 100%;
+  padding: 3px 5px;
+  margin: 3px 0;
+  box-sizing: border-box;
+  border: 2px solid #4CAF50;
+  border-radius: 4px;
+  background-color: #d3d3d3;
+  color: green;
+  font-size: 20px;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+}
+
+input[type=text]:focus {
+  opacity: 1;
+}
+
+input[type=button] {
+  width: 100%;
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  font-size: 20px;
+  padding: 4px 8px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+}
+
+input[type=button]:hover {
+  opacity: 1;
+}
+
+.slidecontainer {
+  width: 100%;
+  /* Width of the outside container */
+}
+
+/* The slider itself */
+.slider {
+  -webkit-appearance: none;
+  /* Override default CSS styles */
+  appearance: none;
+  width: 95%;
+  /* Full-width */
+  height: 25px;
+  /* Specified height */
+  outline: none;
+  /* Remove outline */
+  background: #d3d3d3;
+  /* Grey background */
+  opacity: 0.7;
+  /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s;
+  /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1;
+  /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  /* Override default look */
+  appearance: none;
+  width: 15px;
+  /* Set a specific slider handle width */
+  height: 25px;
+  /* Slider handle height */
+  background: #4CAF50;
+  /* Green background */
+  cursor: pointer;
+  /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+  width: 15px;
+  /* Set a specific slider handle width */
+  height: 25px;
+  /* Slider handle height */
+  background: #4CAF50;
+  /* Green background */
+  cursor: pointer;
+  /* Cursor on hover */
+}
+
+/* Customize the label (the container) */
+.markcontainer {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.markcontainer input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark, .radiomark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background-color: #d3d3d3;
+  /* Grey background */
+  opacity: 0.7;
+  /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s;
+  /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+}
+
+/* On mouse-over, add a grey background color */
+.markcontainer:hover input~.checkmark, .markcontainer:hover input~.radiomark {
+  opacity: 1;
+  /* Fully shown on mouse-over */
+}
+
+/* When the radio button is checked, add a blue background */
+.markcontainer input:checked~.checkmark, .markcontainer input:checked~.radiomark {
+  background-color: #4CAF50;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after, .radiomark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.markcontainer input:checked~.checkmark:after, .markcontainer input:checked~.radiomark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.markcontainer .radiomark:after {
+  top: 6px;
+  left: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+}
+
+/* Style the checkmark/indicator */
+.markcontainer .checkmark:after {
+  top: 3px;
+  left: 6px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
