@@ -394,93 +394,12 @@
       console.log(grafico.canvas);
     }
 
-
-
     function resizeCanvas(canvas) {
       canvas.style.width = '100%';
       canvas.style.height = '100%';
       canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
     }
-
-    /*
-	            t   -> PIC -> tik           -> descripcion:
-	            e   -> PIC -> error         -> descripcion:
-	            c   -> PIC -> ctrl          -> descripcion:
-	            p   -> PIC -> dutyPWM       -> descripcion:
-                r   -> PIC -> retornoConfig -> descripcion:
-                kp  -> PIC -> Kp            -> descripcion:
-                ki  -> PIC -> Ki            -> descripcion:
-                kd  -> PIC -> Kd            -> descripcion:
-                kp2 -> PIC -> Kp2           -> descripcion:
-                ki2 -> PIC -> Ki2           -> descripcion:
-                kd2 -> PIC -> Kd2           -> descripcion:
-                cOn -> PIC -> controlOn     -> descripcion:
-                ds  -> PIC -> dirStep       -> descripcion:
-                ps  -> PIC -> potenciaStep  -> descripcion:
-                dm  -> PIC -> dutyPWMmin    -> descripcion:
-                dl  -> PIC -> dutyPWMlimit  -> descripcion:
-                dt  -> PIC -> dutyPWMlimitTimeout -> descripcion:
-            */
-
-    /*
-            parameters['kp'] = {title: "Kp", value: 1000, inputAttr: {id: "kpinput", type: "text"}, sendAttr: {id: "kpsend", value: "Set"}};
-            parameters['ki'] = {title: "Ki", value: 0, inputAttr: {id: "kdinput", type: "text"}, sendAttr: {id: "kisend", value: "Set"}};
-            parameters['kd'] = {title: "Kd", value: 0, inputAttr: {id: "kiinput", type: "text"}, sendAttr: {id: "kdsend", value: "Set"}};
-            parameters['kp2'] = {title: "Kp2", value: 100, inputAttr: {id: "kp2input", type: "text"}, sendAttr: {id: "kp2send", value: "Set"}};
-            parameters['ki2'] = {title: "Ki2", value: 0, inputAttr: {id: "ki2input", type: "text"}, sendAttr: {id: "ki2send", value: "Set"}};
-            parameters['kd2'] = {title: "Kd2", value: 0, inputAttr: {id: "kd2input", type: "text"}, sendAttr: {id: "kd2send", value: "Set"}};
-            parameters['cOn'] = {title: "Control On", value: 1, inputAttr: {id: "cOninput", type: "text"}, sendAttr: {id: "cOnsend", value: "Set"}};
-            parameters['ds'] = {title: "Direccion de Escalon", value: 1, inputAttr: {id: "dsinput", type: "text"}, sendAttr: {id: "dssend", value: "Set"}};
-            parameters['ps'] = {title: "Potencia de Escalon", value: 1, inputAttr: {id: "psinput", type: "text"}, sendAttr: {id: "pssend", value: "Set"}};
-            parameters['dm'] = {title: "Minimo PWM", value: 1, inputAttr: {id: "dminput", type: "text"}, sendAttr: {id: "dmsend", value: "Set"}};
-            parameters['dl'] = {title: "Limite de PWM", value: 1, inputAttr: {id: "dlinput", type: "text"}, sendAttr: {id: "dlsend", value: "Set"}};
-            parameters['dt'] = {title: "Tiempo de corte", value: 1, inputAttr: {id: "dtinput", type: "text"}, sendAttr: {id: "dtsend", value: "Set"}};
-            parameters['z'] = {title: "Zero", value: 1, inputAttr: {id: "zinput", type: "text"}, sendAttr: {id: "zsend", value: "Zero"}};
-
-            var inputFields = new Object;                           // Campos de ingreso
-            var sendBtns = new Object;                              // Botones de accion
-            var parametersDiv = document.createElement('div');      // Div base del formulario
-            body.appendChild(parametersDiv);                        // Agregamos el div a la pagina
-            parametersDiv.setAttribute("style", "float: right;");   // Atributos
-            var table = document.createElement('table');            // Elemento tabla para alinear los campos del formulario
-            parametersDiv.appendChild(table);                       // Agregamos la tabla al div
-            for (var parameterKey in parameters) {                  // Por cada parametro...
-                var row = table.insertRow(-1);                      // insertamos una fila al final de la tabla...
-                var nameCell = row.insertCell(0);                   // con...
-                var inputCell = row.insertCell(1);                  // tres...
-                var sendCell = row.insertCell(2);                   // celdas.
-
-                nameCell.innerHTML = parameters[parameterKey].title;
-
-                if (typeof parameters[parameterKey].inputAttr != 'undefined'){      // Si el parametro admite input
-                    inputFields[parameterKey] = document.createElement('input');
-                    for (var inputAttr in parameters[parameterKey].inputAttr){
-                        inputFields[parameterKey].setAttribute(inputAttr, parameters[parameterKey].inputAttr[inputAttr]);
-                    }
-                    inputCell.appendChild(inputFields[parameterKey]);
-                }
-
-
-                if (typeof parameters[parameterKey].sendAttr != 'undefined'){      // Si el parametro admite button
-                    sendBtns[parameterKey] = document.createElement('button');
-                    sendBtns[parameterKey].innerHTML = parameters[parameterKey].sendAttr.value;
-                    for (var sendAttr in parameters[parameterKey].sendAttr){
-                        sendBtns[parameterKey].setAttribute(sendAttr, parameters[parameterKey].sendAttr[sendAttr]);
-                    }
-                    sendBtns[parameterKey].setAttribute("onClick", "enviar(\""+parameterKey+"\")");
-                    sendCell.appendChild(sendBtns[parameterKey]);
-                }
-            }
-            /*
-            function autoInsertFor(key) {
-                setInterval(function () {
-                    var val = Math.random();
-                    //console.log('key:'+key+" val:"+val)
-                    series[key].append(new Date().getTime(), val);
-                }, 1000);
-
-            }*/
 
     function enviar(parameterKey) {
       //console.log(typeof protocol[parameterKey])
@@ -496,17 +415,16 @@
                     }*/
       //socket.emit('clientData', "r1\r")
       //}
-
-
       if (!(parameterKey.indexOf('r') > -1)) {
         setTimeout(function() {
           enviar('r');
         }, 50);
-
-
       }
     }
 
+    function pedirPresets(){
+      socket.emit('pedirPresets');
+    }
 
     function isNumeric(n) {
       return !isNaN(parseFloat(n)) && isFinite(n);
@@ -576,6 +494,14 @@
       socket.on('disconnect', function() {
         console.log("disconnect")
       });
+      socket.on('respuestaPresets', function(lista){
+        lista.forEach(function(elemento){
+          var select = document.getElementById("PresetsSelect");
+          var option = document.createElement("option");
+          option.text = elemento;
+          select.add(option);
+        });
+      });
 
       socket.on('newServerData', function(dataStr) { // Al recibir datos desde el servidor
         //console.log("rx remote:"+dataStr);
@@ -612,16 +538,6 @@
             series[elemento].append(new Date().getTime(), valor);
           }
         }
-        /*var keysToGraph = ['e', 'c']; //,'p'];                // Variables de 'data' a graficar
-        for (var i = 0; i < keysToGraph.length; i++) { // Graficar las varialbes previamente elegidas
-          var key = keysToGraph[i];
-          var valor = data[key];
-          console.log("key:" + key + " dat:" + data[key]);
-          var divText = document.getElementById(key + 'Title');
-          var valToShow = Math.round(valor * 10) / 10;
-          divText.innerHTML = textByKey[key] + ' <br>' + (isNumeric(valToShow) ? valToShow : valor) + ' ' + unitByKey[key];
-          series[key].append(new Date().getTime(), valor);
-        }*/
 
         if (typeof data['r'] != 'undefined') {
           for (var datakey in data) {

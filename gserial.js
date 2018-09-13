@@ -1,6 +1,6 @@
-﻿'use strict';
+'use strict';
 
-var serialPort = require("serialport");         //load serial port library object
+var serialPort = require("serialport"); //load serial port library object
 //var readline = serialPort.parsers.readline;     //parser-separator for data input
 const Readline = serialPort.parsers.Readline;
 var app = require('http').createServer(handler)
@@ -9,66 +9,71 @@ var fs = require('fs');
 
 app.listen(80);
 
-function handler (req, res) {
+function handler(req, res) {
 
-	var errMgm=function(err, data) {
-			    if (err) {
-			      res.writeHead(500);
-			      return res.end('Error loading static html');
-			    }
+  var errMgm = function(err, data) {
+    if (err) {
+      res.writeHead(500);
+      return res.end('Error loading static html');
+    }
 
-			    res.writeHead(200);
-			    res.end(data);
-	};
+    res.writeHead(200);
+    res.end(data);
+  };
 
-	console.log(req['url']);
-	if(req['url']==="/"){
-	  fs.readFile(__dirname+ '/public/' + 'gsmooth.html',errMgm);
-	}else{
-		fs.readFile(__dirname + '/public/' + req['url'], errMgm);
-	}
+  console.log(req['url']);
+  if (req['url'] === "/") {
+    fs.readFile(__dirname + '/public/' + 'gsmooth.html', errMgm);
+  } else {
+    fs.readFile(__dirname + '/public/' + req['url'], errMgm);
+  }
 }
 
 
-if (io) {   //server created
-    console.log('listening');
-    console.log('Formato ejemplo:');
-    console.log('{"temp1":"22","temp2":"33", "humA":"29", "humS":"29", "lluvia":"129", "anem":"20","veleta":"33"}');
+if (io) { //server created
+  console.log('listening');
+  console.log('Formato ejemplo:');
+  console.log('{"t":0,"e":0,"c":0,"p":0,"r":1,"kp":1,"ki":0,"kd":0,"kp2":1,"ki2":0,"kd2":0,"cOn":1,"ds":1,"ps":700,"dm":5,"dl":600,"dt":5}');
 
-    var sp = null;
-    var parser;
-    io.on('connection', function (socket) {
+  var sp = null;
+  var parser;
+  io.on('connection', function(socket) {
 
-        if (sp === null || parser ==null) {
-	            //sp = new serialPort("/dev/pts/7", {
-	            sp = new serialPort("/dev/ttyS41", {
-	            //sp = new serialPort("/dev/rfcomm0", {
-	                baud: 9600
-	            });
-	            parser = sp.pipe(new Readline({ delimiter: '\r' }));
+    if (sp === null || parser == null) {
+      //sp = new serialPort("/dev/pts/7", {
+      sp = new serialPort("/dev/ttyS41", {
+        //sp = new serialPort("/dev/rfcomm0", {
+        baud: 9600
+      });
+      parser = sp.pipe(new Readline({
+        delimiter: '\r'
+      }));
 
-        		sp.on("open", function () {
-		            console.log('open serial port');
-		        });
+      sp.on("open", function() {
+        console.log('open serial port');
+      });
 
-		        sp.on('error', function (data) {
-		            console.log('error:'+data);
-		        });
+      sp.on('error', function(data) {
+        console.log('error:' + data);
+      });
 
-		}else{
-        	console.log("ya no necesita abrir puerto");
-        }
-        parser.on('data', function (data) { //callback de recepción de datos
-           		 socket.emit('newServerData', data);
-            	 console.log('rx local: ' + data);//.toString('hex'));
-        		});
-        socket.on('clientData', function (clientData) {
-            console.log("client: " + clientData);
-            sp.write(clientData);
-            sp.drain();
-        });
-
+    } else {
+      console.log("ya no necesita abrir puerto");
+    }
+    parser.on('data', function(data) { //callback de recepción de datos
+      socket.emit('newServerData', data);
+      console.log('rx local: ' + data); //.toString('hex'));
     });
+		socket.on('pedirPresets', function(){
+			socket.emit('respuestaPresets', ["Primero","Segundo","Tercero"])
+		});
+    socket.on('clientData', function(clientData) {
+      console.log("client: " + clientData);
+      sp.write(clientData);
+      sp.drain();
+    });
+
+  });
 }
 
 /*

@@ -1,49 +1,97 @@
 <!doctype html>
 <html>
-    <head>
-        <meta charset="utf-8"/>
-    	<title>Balanceador de Pendulo</title>
-        <script src="/js/smoothie.min.js"></script>
-        <script src="/js/socket.io.js"></script>
-        <script src="/js/escaladoSensores.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/gserial.css"/>
-    </head>
-    <body>
-        <div id="menu" style="display:block;float:left;padding:10px;width:20%">
-          <div id="Botones"style="display:none;">
-            <div id="BotonConstantesPID" style="background: #00FFA0; margin-bottom:0px" onclick="document.getElementById('menu').style.background=this.style.background;document.getElementById('ConstantesPID').style.display='inline'">
-              ConstantesPID
-            </div>
-              <div id="BotonLimitesDuty" style="background: #00A0FF; margin-bottom:0px" onclick="document.getElementById('menu').style.background=this.style.background">
-                LimitesDuty
-              </div>
-                <div id="BotonEscalon" style="background: #00FFFF; margin-bottom:0px" onclick="document.getElementById('menu').style.background=this.style.background">
-                  Escalon
-                </div>
-                  <div id="BotonControl" style="background: #FF00A0; margin-bottom:0px" onclick="document.getElementById('menu').style.background=this.style.background">
-                    Control
-                  </div>
-            </div>
-          <div id="ConstantesPID" style="background:#F8E6E0;margin-top:15px;" >
-            <table>
-                <tr><td>Kp</td><td id="kpvalue" style="width:150px">?</td><td class="slidecontainer"><input id="kp" class="slider" type="range" min="0" max="6000" name="kp" value="1000" onClick='enviar("kp");' oninput="a=document.getElementById(this.id+'value');a.innerHTML=this.value;a.style.color='#0000EE'" ></td></tr>
-                <tr><td>Ki</td><td id="kivalue">?</td><td class="slidecontainer"><input id="ki" class="slider" type="range" min="0" max="200" name="ki" onClick='enviar("ki");' oninput="a=document.getElementById(this.id+'value');a.innerHTML=this.value;a.style.color='#0000EE'"></td></tr>
-                <tr><td>Kd</td><td id="kdvalue">?</td><td class="slidecontainer"><input id="kd" class="slider" type="range" min="0" max="20000" name="kd" onClick='enviar("kd");' oninput="a=document.getElementById(this.id+'value');a.innerHTML=this.value;a.style.color='#0000EE'"></td></tr>
-                <tr><td>Kp2</td><td id="kp2value">?</td><td><input id="kp2" class="slider" type="range" min="0" max="10" name="kp2" onClick='enviar("kp2");' oninput="a=document.getElementById(this.id+'value');a.innerHTML=this.value;a.style.color='#0000EE'"></td></tr>
-                <tr><td>Ki2</td><td id="ki2value">?</td><td><input id="ki2" class="slider" type="range" min="0" max="6" name="ki2" onClick='enviar("ki2");' oninput="a=document.getElementById(this.id+'value');a.innerHTML=this.value;a.style.color='#0000EE'"></td></tr>
-                <tr><td>Kd2</td><td id="kd2value">?</td><td><input id="kd2" class="slider" type="range" min="0" max="6" name="kd2" onClick='enviar("kd2");' oninput="a=document.getElementById(this.id+'value');a.innerHTML=this.value;a.style.color='#0000EE'"></td></tr>
-            </table>
-          </div>
-          <div id="LimitesDuty" style="background:#E6F8E0;margin-top:15px;">
-            <table>
-                <tr><td>dutyPWMmin [0,1023] </td><td><input id="dm" type="text" name="dutyPWMmin" onkeyup="verificarCampo(event,this);"></td></tr>
-                <tr><td>dutyPWMLimit [0,1023] </td><td><input id="dl" type="text" name="dutyPWMlimit" onkeyup="verificarCampo(event,this);"></td></tr>
-                <tr><td>dutyPWMTimeout [int] </td><td><input id="dt" type="text" name="dutyPWMtimeout" onkeyup="verificarCampo(event,this);"></td></tr>
-            </table>
-          </div>
-          <div id="Escalon" style="background:#E0ECF8;margin-top:15px;">
-            <table>
-                <tr><td rowspan="3">Direccion Step </td><td><label class="markcontainer"><input id="ds1check" type="radio" name="dirstep" onClick='enviar("ds1");'><span id="ds1" class="radiomark"></span>Izquierda</td></tr>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Balanceador de Pendulo</title>
+  <script src="/js/smoothie.min.js"></script>
+  <script src="/js/socket.io.js"></script>
+  <script src="/js/escaladoSensores.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/gserial.css" />
+</head>
+
+<body onload='enviar("r")'>
+  <div id="menu" style="display:block;float:left;padding:10px;width:20%">
+    <div id="Botones" style="display:none;">
+      <div id="BotonConstantesPID" style="background: #00FFA0; margin-bottom:0px" onclick="document.getElementById('menu').style.background=this.style.background;document.getElementById('ConstantesPID').style.display='inline'">
+        ConstantesPID
+      </div>
+      <div id="BotonLimitesDuty" style="background: #00A0FF; margin-bottom:0px" onclick="document.getElementById('menu').style.background=this.style.background">
+        LimitesDuty
+      </div>
+      <div id="BotonEscalon" style="background: #00FFFF; margin-bottom:0px" onclick="document.getElementById('menu').style.background=this.style.background">
+        Escalon
+      </div>
+      <div id="BotonControl" style="background: #FF00A0; margin-bottom:0px" onclick="document.getElementById('menu').style.background=this.style.background">
+        Control
+      </div>
+    </div>
+    <div id="Presets" style="background:#F8E6E0">
+      <select id="PresetsSelect" onchange="pedirPresets()">
+        <option value="volvo">Volvo</option>
+        <option value="saab">Saab</option>
+        <option value="mercedes">Mercedes</option>
+        <option value="audi">Audi</option>
+      </select>
+      <textarea>Some text...</textarea>
+      <input type="button" onclick="guardarPreset" value="Guardar">
+      <input type="button" onclick="guardarPreset" value="Borrar">
+    </div>
+    <div id="ConstantesPID" style="background:#F8E6E0;margin-top:15px;">
+      <table style="width:100">
+        <tr>
+          <td>Kp</td>
+          <td id="kpvalue" style="width:150px">?</td>
+          <td class="slidecontainer"><input id="kp" class="slider" type="range" min="0" max="6000" name="kp" value="1000" onClick='enviar("kp");' oninput="a=document.getElementById(this.id+'value');a.innerHTML=this.value;a.style.color='#0000EE'" ></td>
+        </tr>
+        <tr>
+          <td>Ki</td>
+          <td id="kivalue">?</td>
+          <td class="slidecontainer"><input id="ki" class="slider" type="range" min="0" max="200" name="ki" onClick='enviar("ki");' oninput="a=document.getElementById(this.id+'value');a.innerHTML=this.value;a.style.color='#0000EE'"></td>
+        </tr>
+        <tr>
+          <td>Kd</td>
+          <td id="kdvalue">?</td>
+          <td class="slidecontainer"><input id="kd" class="slider" type="range" min="0" max="20000" name="kd" onClick='enviar("kd");' oninput="a=document.getElementById(this.id+'value');a.innerHTML=this.value;a.style.color='#0000EE'"></td>
+        </tr>
+        <tr>
+          <td>Kp2</td>
+          <td id="kp2value">?</td>
+          <td><input id="kp2" class="slider" type="range" min="0" max="10" name="kp2" onClick='enviar("kp2");' oninput="a=document.getElementById(this.id+'value');a.innerHTML=this.value;a.style.color='#0000EE'"></td>
+        </tr>
+        <tr>
+          <td>Ki2</td>
+          <td id="ki2value">?</td>
+          <td><input id="ki2" class="slider" type="range" min="0" max="6" name="ki2" onClick='enviar("ki2");' oninput="a=document.getElementById(this.id+'value');a.innerHTML=this.value;a.style.color='#0000EE'"></td>
+        </tr>
+        <tr>
+          <td>Kd2</td>
+          <td id="kd2value">?</td>
+          <td><input id="kd2" class="slider" type="range" min="0" max="6" name="kd2" onClick='enviar("kd2");' oninput="a=document.getElementById(this.id+'value');a.innerHTML=this.value;a.style.color='#0000EE'"></td>
+        </tr>
+      </table>
+    </div>
+    <div id="LimitesDuty" style="background:#E6F8E0;margin-top:15px;">
+      <table>
+        <tr>
+          <td>dutyPWMmin [0,1023] </td>
+          <td><input id="dm" type="text" name="dutyPWMmin" onkeyup="verificarCampo(event,this);"></td>
+        </tr>
+        <tr>
+          <td>dutyPWMLimit [0,1023] </td>
+          <td><input id="dl" type="text" name="dutyPWMlimit" onkeyup="verificarCampo(event,this);"></td>
+        </tr>
+        <tr>
+          <td>dutyPWMTimeout [int] </td>
+          <td><input id="dt" type="text" name="dutyPWMtimeout" onkeyup="verificarCampo(event,this);"></td>
+        </tr>
+      </table>
+    </div>
+    <div id="Escalon" style="background:#E0ECF8;margin-top:15px;">
+      <table>
+        <tr>
+          <td rowspan="3">Direccion Step </td>
+          <td><label class="markcontainer"><input id="ds1check" type="radio" name="dirstep" onClick='enviar("ds1");'><span id="ds1" class="radiomark"></span>Izquierda</td></tr>
                 <tr>                                    <td><label class="markcontainer"><input id="ds0check" type="radio" name="dirstep" onClick='enviar("ds0");'><span id="ds0" class="radiomark"></span>Anulado  </td></tr>
                 <tr>                                    <td><label class="markcontainer"><input id="ds2check" type="radio" name="dirstep" onClick='enviar("ds2");'><span id="ds2" class="radiomark"></span>Derecha  </td></tr>
                 <tr><td>PotenciaStep [1,1023] </td><td><input id="ps" type="text" name="potenciastep" onkeyup="verificarCampo(event,this);"></td></tr>
