@@ -10,22 +10,21 @@
   <link rel="stylesheet" type="text/css" href="css/gserial.css" />
 </head>
 
-<body onload='enviar("r")'>
+<body onload='enviar("r");pedirPresets()'>
 
 
   <div id="menu" class="tabs">
   <input class="input" name="tabs" type="checkbox" id="tab-1" checked="checked"/>
   <label class="label" for="tab-1">Presets</label>
     <div id="Presets" class="panel" style="background:#F8E6E0">
-      <select id="PresetsSelect" onchange="pedirPresets()">
-        <option value="volvo">Volvo</option>
-        <option value="saab">Saab</option>
-        <option value="mercedes">Mercedes</option>
-        <option value="audi">Audi</option>
+      <select id="PresetsSelect" oninput="cargarPreset(this.value)" onchange="cargarPreset(this.value)">
       </select>
-      <textarea>Some text...</textarea>
-      <input type="button" onclick="guardarPreset" value="Guardar">
-      <input type="button" onclick="guardarPreset" value="Borrar">
+      <input id="nombrePreset" type="text" style="display:none">
+      <textarea id="descripcionPreset"></textarea>
+
+      <input id="btnNuevoPreset" type="button" onclick="nuevoPreset();" value="Nuevo">
+      <input id="btnGuardarPreset" style="display:none;" type="button" onclick="guardarPresets();" value="Guardar">
+      <input type="button" onclick="borrarPreset()" value="Borrar">
     </div>
   <input class="input" name="tabs" type="checkbox" id="tab-2"/>
   <label class="label" for="tab-2">Configuracion PID</label>
@@ -104,6 +103,8 @@
                 <tr><td colspan="2"><input type='button' onClick='enviar("r");' value="Actualizar estado"></td></tr>
             </table>
             <div id='liveVars'></div>
+        </div>
+        <div id="graficasDiv">
         </div>
     </body>
     <script src="/js/graficos.js"></script>

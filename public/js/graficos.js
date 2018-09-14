@@ -69,7 +69,7 @@
     protocol["cOn"] = {
       pic2web: function(value) {
         document.getElementById("cOncheck").checked = value;
-          document.getElementById("cOn").style.background = "#4CAF50";
+        document.getElementById("cOn").style.background = "#4CAF50";
       },
       web2pic: function() {
         document.getElementById("cOn").style.background = "yellow";
@@ -77,39 +77,36 @@
       }
     };
     protocol["ds0"] = {
-      pic2web: function(value) {
-      },
+      pic2web: function(value) {},
       web2pic: function() {
-      document.getElementById("ds0").style.background = "yellow";
-      document.getElementById("ds1").style.background = "#d3d3d3";
-      document.getElementById("ds2").style.background = "#d3d3d3";
+        document.getElementById("ds0").style.background = "yellow";
+        document.getElementById("ds1").style.background = "#d3d3d3";
+        document.getElementById("ds2").style.background = "#d3d3d3";
         return "m0\r";
       }
     };
     protocol["ds1"] = {
-      pic2web: function(value) {
-      },
+      pic2web: function(value) {},
       web2pic: function() {
-      document.getElementById("ds0").style.background = "#d3d3d3";
-      document.getElementById("ds1").style.background = "yellow";
-      document.getElementById("ds2").style.background = "#d3d3d3";
+        document.getElementById("ds0").style.background = "#d3d3d3";
+        document.getElementById("ds1").style.background = "yellow";
+        document.getElementById("ds2").style.background = "#d3d3d3";
         return "m1\r";
       }
     };
     protocol["ds2"] = {
-      pic2web: function(value) {
-      },
+      pic2web: function(value) {},
       web2pic: function() {
-      document.getElementById("ds0").style.background = "#d3d3d3";
-      document.getElementById("ds1").style.background = "#d3d3d3";
-      document.getElementById("ds2").style.background = "yellow";
+        document.getElementById("ds0").style.background = "#d3d3d3";
+        document.getElementById("ds1").style.background = "#d3d3d3";
+        document.getElementById("ds2").style.background = "yellow";
         return "m2\r";
       }
     };
     protocol["ds"] = {
       pic2web: function(value) {
         var id = "ds" + value;
-        document.getElementById(id+"check").checked = true;
+        document.getElementById(id + "check").checked = true;
         document.getElementById("ds0").style.background = "#d3d3d3";
         document.getElementById("ds1").style.background = "#d3d3d3";
         document.getElementById("ds2").style.background = "#d3d3d3";
@@ -178,17 +175,18 @@
     };
 
     var socket;
+    var presets = new Object;
 
-    function verificarCampo(event,campo) {
+    function verificarCampo(event, campo) {
       event.preventDefault();
       campo.style.color = "blue"
       if (event.keyCode === 13) {
-      campo.style.color = "yellow"
+        campo.style.color = "yellow"
         enviar(campo.id);
       }
-    if (event.keyCode == 27) {  // 27 is the ESC key
-        alert ("You pressed the Escape key!");
-    }
+      if (event.keyCode == 27) { // 27 is the ESC key
+        alert("You pressed the Escape key!");
+      }
     }
 
 
@@ -358,16 +356,6 @@
       return graficas;
     }
 
-    /*var fruits = ["Banana", "Orange", "Apple", "Mango"];
-    document.getElementById("demo").innerHTML = fruits;
-
-    function myFunction() {
-    	if (fruits.indexOf("Lemon")===-1){
-        fruits.push("Lemon");
-        }
-        document.getElementById("demo").innerHTML = fruits;
-    }*/
-
     function createGrid(grafico) {
       var gridDiv = document.createElement('div');
       grafico.canvas = document.createElement('canvas');
@@ -401,6 +389,12 @@
       canvas.height = canvas.offsetHeight;
     }
 
+    function isNumeric(n) {
+      return !isNaN(parseFloat(n)) && isFinite(n);
+    }
+
+
+
     function enviar(parameterKey) {
       //console.log(typeof protocol[parameterKey])
       var arg;
@@ -422,12 +416,55 @@
       }
     }
 
-    function pedirPresets(){
+    function cargarPreset(presetKey) {
+      var thisPreset = presets[presetKey];
+      for (var campo in thisPreset) {
+        document.getElementById(campo).value = thisPreset[campo];
+      }
+    }
+
+    function borrarPreset() {
+      delete presets[document.getElementById('PresetsSelect').value];
+      socket.emit('guardarPresets', presets);
+        socket.emit('pedirPresets');
+    }
+
+    function nuevoPreset() {
+      document.getElementById('PresetsSelect').style.display = 'none';
+      document.getElementById('nombrePreset').value = "";
+      document.getElementById('descripcionPreset').value = "";
+      document.getElementById('nombrePreset').style.display = 'inline';
+      document.getElementById('btnNuevoPreset').style.display = 'none';
+      document.getElementById('btnGuardarPreset').style.display = 'inline';
+    }
+
+    function pedirPresets() {
       socket.emit('pedirPresets');
     }
 
-    function isNumeric(n) {
-      return !isNaN(parseFloat(n)) && isFinite(n);
+    function guardarPresets() {
+      document.getElementById('PresetsSelect').style.display = 'inline';
+      document.getElementById('nombrePreset').style.display = 'none';
+      document.getElementById('btnNuevoPreset').style.display = 'inline';
+      document.getElementById('btnGuardarPreset').style.display = 'none';
+      var nombrePreset = document.getElementById('nombrePreset').value;
+      presets[nombrePreset] = {
+        "descripcionPreset": document.getElementById('descripcionPreset').value,
+        "kp": document.getElementById('kp').value,
+        "ki": document.getElementById('ki').value,
+        "kd": document.getElementById('kd').value,
+        "kp2": document.getElementById('kp2').value,
+        "ki2": document.getElementById('ki2').value,
+        "kd2": document.getElementById('kd2').value,
+        "dm": document.getElementById('dm').value,
+        "dl": document.getElementById('dl').value,
+        "dt": document.getElementById('dt').value,
+        "ps": document.getElementById('ps').value,
+        "s": document.getElementById('s').value
+      }
+
+      socket.emit('guardarPresets', presets);
+        socket.emit('pedirPresets');
     }
 
     function inicializarGraficos() {
@@ -475,7 +512,6 @@
         }
       }
 
-
       //SOCKET IO
       socket = io({
         'connect_timeout': 1000,
@@ -494,17 +530,34 @@
       socket.on('disconnect', function() {
         console.log("disconnect")
       });
-      socket.on('respuestaPresets', function(lista){
-        lista.forEach(function(elemento){
-          var select = document.getElementById("PresetsSelect");
+      //
+      // socket.on('listaPresets', function(lista) {
+      //   var select = document.getElementById("PresetsSelect");
+      //   for (var i = select.options.length - 1; i >= 0; i--) {
+      //     select.remove(i);
+      //   }
+      //   lista.forEach(function(elemento) {
+      //     var option = document.createElement("option");
+      //     option.text = elemento;
+      //     select.add(option);
+      //   });
+      // });
+      socket.on('valoresPreset', function(valores) {
+        presets = valores;
+        console.log(presets);
+        var select = document.getElementById("PresetsSelect");
+        for (var i = select.options.length - 1; i >= 0; i--) {
+          select.remove(i);
+        }
+        for (var elemento in presets) {
           var option = document.createElement("option");
           option.text = elemento;
           select.add(option);
-        });
+        }
       });
 
       socket.on('newServerData', function(dataStr) { // Al recibir datos desde el servidor
-        //console.log("rx remote:"+dataStr);
+        console.log("rx remote:" + dataStr);
         var data = JSON.parse(dataStr); // los guarda en data
 
         // Ejemplo de data:

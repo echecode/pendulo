@@ -64,9 +64,22 @@ if (io) { //server created
       socket.emit('newServerData', data);
       console.log('rx local: ' + data); //.toString('hex'));
     });
-		socket.on('pedirPresets', function(){
-			socket.emit('respuestaPresets', ["Primero","Segundo","Tercero"])
-		});
+    socket.on('pedirPresets', function() {
+      var presets = JSON.parse(fs.readFileSync(__dirname + "/presets.json", 'utf8'));
+      socket.emit('valoresPreset', presets);
+    });
+    socket.on('guardarPresets', function(presets) {
+
+      var content = JSON.stringify(presets);
+      console.log("por aca pasa: "+content);
+      fs.writeFile(__dirname + "/presets.json", content, function(err) {
+        if (err) {
+          return console.log(err);
+        }
+
+        console.log("The file was saved!");
+      });
+    });
     socket.on('clientData', function(clientData) {
       console.log("client: " + clientData);
       sp.write(clientData);
