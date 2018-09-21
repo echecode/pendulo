@@ -376,7 +376,9 @@
       grafico.divText.innerHTML = grafico.titulo;
       gridDiv.appendChild(grafico.divText)
       gridDiv.appendChild(grafico.canvas)
-      document.body.appendChild(gridDiv);
+      var graficasDiv=document.getElementById('graficasDiv');
+
+      graficasDiv.appendChild(gridDiv);
       window.addEventListener('resize', resizeCanvas(grafico.canvas), false);
       resizeCanvas(grafico.canvas);
       console.log(grafico.canvas);
