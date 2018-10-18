@@ -40,9 +40,9 @@ if (io) { //server created
   io.on('connection', function(socket) {
 
     if (sp === null || parser == null) {
-      //sp = new serialPort("/dev/pts/7", {
-      sp = new serialPort("/dev/ttyS41", {
-        //sp = new serialPort("/dev/rfcomm0", {
+      // sp = new serialPort("/dev/pts/7", {
+      // sp = new serialPort("/dev/ttyS41", {
+        sp = new serialPort("/dev/rfcomm0", {
         baud: 9600
       });
       parser = sp.pipe(new Readline({

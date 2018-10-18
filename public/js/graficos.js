@@ -69,11 +69,19 @@
     protocol["cOn"] = {
       pic2web: function(value) {
         document.getElementById("cOncheck").checked = value;
-        document.getElementById("cOn").style.background = "#4CAF50";
+        if(value){
+            document.getElementById("cOn").style.background = "#4CAF50";
+        }else{
+            document.getElementById("cOn").style.background = "#d3d3d3";
+        }
+
       },
       web2pic: function() {
         document.getElementById("cOn").style.background = "yellow";
-        return "c" + ((document.getElementById("cOn").checked) ? '1' : '0') + "\r";
+        // console.log("Checked: " + document.getElementById("cOn").checked);
+        var algo = "c" + ((document.getElementById("cOncheck").checked) ? '1' : '0') + "\r";
+        // console.log("Comando: " + algo);
+        return algo;
       }
     };
     protocol["ds0"] = {

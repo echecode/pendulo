@@ -239,7 +239,9 @@ select:hover {
   -webkit-transition: .2s;
   /* 0.2 seconds transition on hover */
   transition: opacity .2s;
+  margin-top: -5px;
 }
+
 
 /* On mouse-over, add a grey background color */
 .markcontainer:hover input~.checkmark, .markcontainer:hover input~.radiomark {
